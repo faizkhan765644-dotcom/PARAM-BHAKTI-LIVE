@@ -2364,22 +2364,22 @@
         'use strict';
 
         // ============================================================
-        //  CONFIGURATION
+        //  CONFIGURATION — UPDATED URL (user requested change)
+        //  IMPORTANT: Replace this URL with your actual Razorpay payment link.
+        //  Make sure the payment link is configured for ₹599 and has the
+        //  correct return URL set in the Razorpay dashboard.
         // ============================================================
         const CONFIG = {
-            // Razorpay payment link (user provided)
+            // UPDATED: New Razorpay payment link (user requested change)
+            // The user must create a payment link on Razorpay for ₹599
+            // and set the return URL to this page with ?payment_success=1
             RAZORPAY_LINK: 'https://razorpay.me/@freshnewvideo',
 
-            // Google Drive folder link
+            // Google Drive folder link (unchanged)
             DRIVE_FOLDER_LINK: 'https://drive.google.com/drive/folders/1srsIEjINqY7vIk1CRiWeoV7yLd6Jk728',
 
-            // WhatsApp support number
-            WHATSAPP_NUMBER: '919999999999',
-
-            // Return URL after payment — this page with a success param
-            // The user must set this as the return URL in their Razorpay payment link settings.
-            // Format: https://yourdomain.com/?payment_success=1&payment_id={payment_id}
-            RETURN_URL: window.location.href.split('?')[0] + '?payment_success=1&payment_id={payment_id}'
+            // WhatsApp support number (unchanged)
+            WHATSAPP_NUMBER: '919999999999'
         };
 
         // ============================================================
@@ -2661,6 +2661,8 @@
         //  FORM SUBMISSION → Open Razorpay Payment Link
         //  The user is redirected to Razorpay. After payment, Razorpay
         //  redirects back to this page with ?payment_success=1
+        //  IMPORTANT: The user must configure the return URL in their
+        //  Razorpay dashboard to include ?payment_success=1&payment_id={payment_id}
         // ============================================================
         form.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -2700,12 +2702,9 @@
                 '&mobile=' + userMobile;
 
             // Razorpay payment link URL with pre-filled fields and return URL
-            // Note: The user needs to configure their Razorpay payment link
+            // The user needs to configure their Razorpay payment link
             // to use this return URL. In the Razorpay dashboard, set the
             // "Return URL" to this page with the {payment_id} placeholder.
-            //
-            // For now, we open the payment link and rely on the return URL
-            // configured in the Razorpay dashboard.
             const paymentUrl = CONFIG.RAZORPAY_LINK +
                 '?name=' + userName +
                 '&email=' + userEmail +
@@ -2823,7 +2822,8 @@
         console.log('   - Razorpay link: ' + CONFIG.RAZORPAY_LINK);
         console.log('   - Google Drive folder: ' + CONFIG.DRIVE_FOLDER_LINK);
         console.log('   - WhatsApp: ' + CONFIG.WHATSAPP_NUMBER);
-        console.log('   - Return URL: ' + CONFIG.RETURN_URL);
+        console.log('   - IMPORTANT: Configure return URL in Razorpay dashboard to: ' + window.location.href.split('?')[0] +
+            '?payment_success=1&payment_id={payment_id}');
 
         // Also check if the user has already paid (stored in localStorage)
         try {
