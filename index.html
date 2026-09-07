@@ -1189,9 +1189,9 @@
             font-size: 1.1rem;
             font-weight: 700;
             border-radius: 50px;
-            background: linear-gradient(135deg, var(--success), #059669);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: var(--white);
-            box-shadow: 0 8px 30px rgba(22, 163, 74, 0.35);
+            box-shadow: 0 8px 30px rgba(109, 40, 217, 0.35);
             transition: var(--transition);
             border: none;
             cursor: pointer;
@@ -1200,7 +1200,7 @@
         }
         .thankyou-card .download-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 14px 40px rgba(22, 163, 74, 0.45);
+            box-shadow: 0 14px 40px rgba(109, 40, 217, 0.45);
         }
         .thankyou-card .download-btn:active {
             transform: scale(0.96);
@@ -2141,7 +2141,7 @@
             </div>
             <h2>🎉 Dhanyavaad! Subscription successful!</h2>
             <p class="thankyou-sub">Aapka Fresh Video Subscription confirm ho gaya hai.</p>
-            <p class="thankyou-desc">Aapki details neeche di gayi hain. Ab neeche diye gaye download button par click karke apni files download karein.</p>
+            <p class="thankyou-desc">Aapki details neeche di gayi hain. Ab neeche diye gaye button par click karke apni files access karein.</p>
 
             <div class="user-details" id="userDetailsDisplay">
                 <p><strong>Naam:</strong> <span id="displayName">-</span></p>
@@ -2150,14 +2150,14 @@
                 <p><strong>Plan:</strong> Fresh Video Subscription – ₹599 / 30 Days</p>
             </div>
 
-            <!-- Download Button -->
+            <!-- Download Button → Google Drive Link -->
             <button class="download-btn" id="downloadBtn">
-                <i class="fas fa-download"></i> Download File
+                <i class="fas fa-folder-open"></i> Access Videos (Google Drive)
             </button>
 
             <p class="thankyou-note">
                 <i class="fas fa-info-circle"></i>
-                Agar download start nahi hota toh upar diye gaye link par click karein.
+                Click karke Drive folder mein jayein jahan daily nayi videos upload ki jaati hain.
             </p>
             <p class="thankyou-note" style="margin-top:8px;">
                 <i class="fas fa-envelope"></i>
@@ -2307,16 +2307,14 @@
         'use strict';
 
         // ============================================================
-        //  CONFIGURATION – Change these values as needed
+        //  CONFIGURATION – Updated as per user request
         // ============================================================
         const CONFIG = {
             // Razorpay payment link (user provided)
             RAZORPAY_LINK: 'https://razorpay.me/@freshnewvideo',
 
-            // File to download after payment (user can change this)
-            // You can put any file URL here (PDF, ZIP, video, etc.)
-            DOWNLOAD_FILE_URL: 'https://param-bhakti-live.faizkhan765644.workers.dev/introduce%20video.mp4',
-            DOWNLOAD_FILE_NAME: 'Fresh_Video_Sample.mp4',
+            // Google Drive folder link where videos are uploaded daily
+            DRIVE_FOLDER_LINK: 'https://drive.google.com/drive/folders/1srsIEjINqY7vIk1CRiWeoV7yLd6Jk728',
 
             // WhatsApp support number
             WHATSAPP_NUMBER: '919999999999'
@@ -2522,7 +2520,7 @@
         });
 
         // ============================================================
-        //  FORM SUBMISSION → Open Razorpay → Show Thank You → Download
+        //  FORM SUBMISSION → Open Razorpay → Show Thank You → Drive Link
         // ============================================================
         form.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -2561,7 +2559,7 @@
                 payBtn.disabled = false;
                 payBtn.innerHTML = '<i class="fas fa-credit-card"></i> ₹599 payment karein';
 
-                // Store user data in localStorage for the download handler
+                // Store user data in localStorage
                 try {
                     localStorage.setItem('fresh_video_user', JSON.stringify({
                         name: userName,
@@ -2570,28 +2568,22 @@
                     }));
                 } catch (_) { /* ignore */ }
 
-            }, 800); // small delay so the payment tab opens first
+            }, 800);
         });
 
         // ============================================================
-        //  DOWNLOAD BUTTON — downloads the file from CONFIG
+        //  DOWNLOAD BUTTON → Opens Google Drive Folder
         // ============================================================
         downloadBtn.addEventListener('click', function() {
-            // Create an anchor element and trigger download
-            const link = document.createElement('a');
-            link.href = CONFIG.DOWNLOAD_FILE_URL;
-            link.download = CONFIG.DOWNLOAD_FILE_NAME;
-            link.target = '_blank';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            // Open the Google Drive folder in a new tab
+            window.open(CONFIG.DRIVE_FOLDER_LINK, '_blank');
 
-            // Also show a small feedback
+            // Show feedback
             const originalText = downloadBtn.innerHTML;
-            downloadBtn.innerHTML = '<i class="fas fa-check"></i> Downloading...';
+            downloadBtn.innerHTML = '<i class="fas fa-check"></i> Opening Drive...';
             setTimeout(function() {
                 downloadBtn.innerHTML = originalText;
-            }, 3000);
+            }, 2500);
         });
 
         // ============================================================
@@ -2641,7 +2633,7 @@
         console.log('✅ Fresh Video – Param Bhakti Live loaded successfully.');
         console.log('📌 Payment flow:');
         console.log('   - Razorpay link: ' + CONFIG.RAZORPAY_LINK);
-        console.log('   - Download file: ' + CONFIG.DOWNLOAD_FILE_URL);
+        console.log('   - Google Drive folder: ' + CONFIG.DRIVE_FOLDER_LINK);
         console.log('   - WhatsApp: ' + CONFIG.WHATSAPP_NUMBER);
 
     })();
