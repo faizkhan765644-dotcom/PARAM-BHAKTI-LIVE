@@ -492,39 +492,86 @@
             color: var(--gray-400);
         }
 
+        /* ===== VIDEO THUMBNAILS WITH ACTUAL VIDEOS ===== */
         .hero-mockup .mockup-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 12px;
             margin-bottom: 16px;
         }
-        .hero-mockup .mockup-grid .mockup-thumb {
+
+        .mockup-video-wrap {
+            position: relative;
             aspect-ratio: 16/9;
-            background: linear-gradient(135deg, #E8E0F5, #D5C9F0);
             border-radius: var(--radius-sm);
+            overflow: hidden;
+            background: #1a1a2e;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .mockup-video-wrap video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            background: #0f0f1a;
+        }
+
+        .mockup-video-wrap .play-overlay {
+            position: absolute;
+            inset: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.7rem;
-            font-weight: 500;
-            color: var(--gray-500);
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(0, 0, 0, 0.25);
+            transition: background 0.3s ease;
+            pointer-events: none;
         }
-        .hero-mockup .mockup-grid .mockup-thumb .play-icon {
+
+        .mockup-video-wrap .play-overlay i {
+            font-size: 2.4rem;
+            color: rgba(255, 255, 255, 0.85);
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .mockup-video-wrap:hover .play-overlay {
+            background: rgba(0, 0, 0, 0.15);
+        }
+        .mockup-video-wrap:hover .play-overlay i {
+            transform: scale(1.08);
+            color: #fff;
+        }
+
+        .mockup-video-wrap .video-label {
             position: absolute;
-            font-size: 1.4rem;
-            color: rgba(109, 40, 217, 0.3);
+            top: 8px;
+            left: 8px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            color: #fff;
+            font-size: 0.55rem;
+            font-weight: 600;
+            padding: 2px 12px;
+            border-radius: 50px;
+            letter-spacing: 0.04em;
+            pointer-events: none;
+            text-transform: uppercase;
         }
-        .hero-mockup .mockup-grid .mockup-thumb:nth-child(2) {
-            background: linear-gradient(135deg, #FCE4F0, #F8D0E4);
-        }
-        .hero-mockup .mockup-grid .mockup-thumb:nth-child(3) {
-            background: linear-gradient(135deg, #FEF3D7, #FDE8B8);
-        }
-        .hero-mockup .mockup-grid .mockup-thumb:nth-child(4) {
-            background: linear-gradient(135deg, #D1FAE5, #A7F3D0);
+
+        .mockup-video-wrap .mute-badge {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.5rem;
+            padding: 2px 8px;
+            border-radius: 50px;
+            pointer-events: none;
+            letter-spacing: 0.04em;
         }
 
         .hero-mockup .mockup-features {
@@ -1498,10 +1545,34 @@
                     <span class="mockup-price">₹599 <small>/30D</small></span>
                 </div>
                 <div class="mockup-grid">
-                    <div class="mockup-thumb"><span class="play-icon"><i class="fas fa-play-circle"></i></span></div>
-                    <div class="mockup-thumb"><span class="play-icon"><i class="fas fa-play-circle"></i></span></div>
-                    <div class="mockup-thumb"><span class="play-icon"><i class="fas fa-play-circle"></i></span></div>
-                    <div class="mockup-thumb"><span class="play-icon"><i class="fas fa-play-circle"></i></span></div>
+                    <!-- Video 1 -->
+                    <div class="mockup-video-wrap" data-video="https://param-bhakti-live.faizkhan765644.workers.dev/Bhakti%20video.mp4">
+                        <video muted playsinline preload="metadata" src="https://param-bhakti-live.faizkhan765644.workers.dev/Bhakti%20video.mp4"></video>
+                        <div class="play-overlay"><i class="fas fa-play-circle"></i></div>
+                        <span class="video-label">Bhakti</span>
+                        <span class="mute-badge">🔇 Tap to play</span>
+                    </div>
+                    <!-- Video 2 -->
+                    <div class="mockup-video-wrap" data-video="https://param-bhakti-live.faizkhan765644.workers.dev/bhakti%20video%202.2.mp4">
+                        <video muted playsinline preload="metadata" src="https://param-bhakti-live.faizkhan765644.workers.dev/bhakti%20video%202.2.mp4"></video>
+                        <div class="play-overlay"><i class="fas fa-play-circle"></i></div>
+                        <span class="video-label">Bhakti</span>
+                        <span class="mute-badge">🔇 Tap to play</span>
+                    </div>
+                    <!-- Video 3 -->
+                    <div class="mockup-video-wrap" data-video="https://param-bhakti-live.faizkhan765644.workers.dev/cartoon.mp4">
+                        <video muted playsinline preload="metadata" src="https://param-bhakti-live.faizkhan765644.workers.dev/cartoon.mp4"></video>
+                        <div class="play-overlay"><i class="fas fa-play-circle"></i></div>
+                        <span class="video-label">Cartoon</span>
+                        <span class="mute-badge">🔇 Tap to play</span>
+                    </div>
+                    <!-- Video 4 -->
+                    <div class="mockup-video-wrap" data-video="https://param-bhakti-live.faizkhan765644.workers.dev/video%20example.mp4">
+                        <video muted playsinline preload="metadata" src="https://param-bhakti-live.faizkhan765644.workers.dev/video%20example.mp4"></video>
+                        <div class="play-overlay"><i class="fas fa-play-circle"></i></div>
+                        <span class="video-label">Example</span>
+                        <span class="mute-badge">🔇 Tap to play</span>
+                    </div>
                 </div>
                 <div class="mockup-features">
                     <span><i class="fas fa-video"></i> 4 Videos Daily</span>
@@ -2010,16 +2081,9 @@
 
             // ===== CONFIGURATION – Change these values as needed =====
             const CONFIG = {
-                // Razorpay payment link (provided by the owner) with amount
                 RAZORPAY_LINK: 'https://razorpay.me/@freshnewvideo?amount=599',
-
-                // Google Drive folder link – replace with the actual link
                 DRIVE_LINK: 'YOUR_GOOGLE_DRIVE_FOLDER_LINK',
-
-                // WhatsApp support number (with country code, no + sign)
                 WHATSAPP_NUMBER: '919999999999',
-
-                // Thank you page URL (relative or absolute)
                 THANK_YOU_PAGE: 'thank-you.html'
             };
 
@@ -2042,7 +2106,6 @@
                 this.setAttribute('aria-expanded', isOpen);
             });
 
-            // Close mobile menu on link click
             mobileNav.querySelectorAll('a').forEach(function(link) {
                 link.addEventListener('click', function() {
                     hamburger.classList.remove('active');
@@ -2057,14 +2120,10 @@
                 const question = item.querySelector('.faq-question');
                 question.addEventListener('click', function() {
                     const isActive = item.classList.contains('active');
-
-                    // Close all
                     faqItems.forEach(function(other) {
                         other.classList.remove('active');
                         other.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
                     });
-
-                    // Toggle this one
                     if (!isActive) {
                         item.classList.add('active');
                         item.querySelector('.faq-question').setAttribute('aria-expanded', 'true');
@@ -2091,23 +2150,19 @@
                     nameError,
                     fullName.value.trim().length >= 2
                 );
-
                 const emailValid = validateField(
                     email,
                     emailError,
                     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())
                 );
-
                 const mobileValid = validateField(
                     mobile,
                     mobileError,
                     /^[0-9]{10}$/.test(mobile.value.trim())
                 );
-
                 return nameValid && emailValid && mobileValid;
             }
 
-            // Real-time validation on blur
             fullName.addEventListener('blur', function() {
                 validateField(this, nameError, this.value.trim().length >= 2);
             });
@@ -2121,21 +2176,15 @@
             // ===== Form submission =====
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
-
                 if (!validateForm()) {
-                    // Scroll to first error
                     const firstError = form.querySelector('.form-group input.error');
-                    if (firstError) {
-                        firstError.focus();
-                    }
+                    if (firstError) firstError.focus();
                     return;
                 }
 
-                // Disable button to prevent double submission
                 payBtn.disabled = true;
                 payBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Kripya pratiksha karein...';
 
-                // === Save customer details (for production, send to backend) ===
                 const customerData = {
                     name: fullName.value.trim(),
                     email: email.value.trim(),
@@ -2145,63 +2194,25 @@
                     duration: '30 Days',
                     dailyVideos: '4'
                 };
-
                 console.log('Customer details:', customerData);
 
-                // === In production, send this data to your backend: ===
-                // fetch('/api/subscribe', {
-                //   method: 'POST',
-                //   headers: { 'Content-Type': 'application/json' },
-                //   body: JSON.stringify(customerData)
-                // })
-                // .then(response => response.json())
-                // .then(data => {
-                //   // Open Razorpay payment link with session/order ID
-                //   window.open(CONFIG.RAZORPAY_LINK, '_blank');
-                // })
-                // .catch(err => console.error('Error:', err));
-
-                // === For frontend-only demo: open Razorpay link ===
-                // Note: In a production environment, the payment link should be
-                // generated server-side with order details. The link below is
-                // the static link provided by the owner.
+                // In production, send data to backend and open Razorpay
                 window.open(CONFIG.RAZORPAY_LINK, '_blank');
 
-                // Re-enable button after a short delay (for demo purposes)
                 setTimeout(function() {
                     payBtn.disabled = false;
                     payBtn.innerHTML = '<i class="fas fa-credit-card"></i> ₹599 payment karein';
                 }, 3000);
-
-                // In production, after successful payment verification via webhook,
-                // redirect to thank-you page. For demo, we'll redirect after a delay.
-                // The thank-you page will be shown after Razorpay redirects back.
-                // In a real implementation, Razorpay redirects to a callback URL
-                // which then renders the thank-you page.
-                // For this demo, we'll assume the redirect happens.
-                // The thank-you page is a separate HTML file.
-
-                // Optionally, you can redirect after a few seconds:
-                // setTimeout(() => {
-                //   window.location.href = CONFIG.THANK_YOU_PAGE;
-                // }, 5000);
-
-                // Note: The actual flow should be:
-                // 1. User fills form → submit → send data to backend
-                // 2. Backend creates a Razorpay order/ payment link
-                // 3. User completes payment on Razorpay
-                // 4. Razorpay redirects to thank-you page with payment status
-                // 5. Backend verifies payment via webhook and activates subscription
-                // 6. The thank-you page displays the Drive access button
             });
 
             // ===== WhatsApp support =====
             const wspLink = document.getElementById('whatsappSupport');
             if (wspLink) {
-                wspLink.href = 'https://wa.me/' + CONFIG.WHATSAPP_NUMBER + '?text=Hi%2C%20I%20need%20help%20with%20my%20Fresh%20Video%20subscription.';
+                wspLink.href = 'https://wa.me/' + CONFIG.WHATSAPP_NUMBER +
+                    '?text=Hi%2C%20I%20need%20help%20with%20my%20Fresh%20Video%20subscription.';
             }
 
-            // ===== Smooth scroll for anchor links =====
+            // ===== Smooth scroll =====
             document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
                 anchor.addEventListener('click', function(e) {
                     const targetId = this.getAttribute('href');
@@ -2216,7 +2227,7 @@
                 });
             });
 
-            // ===== Navbar shadow on scroll =====
+            // ===== Navbar shadow =====
             const navbar = document.getElementById('navbar');
             window.addEventListener('scroll', function() {
                 if (window.scrollY > 20) {
@@ -2228,9 +2239,86 @@
                 }
             });
 
+            // ===== HERO VIDEO PLAY/PAUSE ON CLICK =====
+            const videoWraps = document.querySelectorAll('.mockup-video-wrap');
+
+            videoWraps.forEach(function(wrap) {
+                const video = wrap.querySelector('video');
+                const overlay = wrap.querySelector('.play-overlay');
+                const muteBadge = wrap.querySelector('.mute-badge');
+
+                if (!video) return;
+
+                // Click to toggle play/pause
+                wrap.addEventListener('click', function(e) {
+                    // Ignore clicks on the badge or label
+                    if (e.target.closest('.video-label') || e.target.closest('.mute-badge')) return;
+
+                    if (video.paused) {
+                        // Pause any other playing videos
+                        videoWraps.forEach(function(other) {
+                            const otherVideo = other.querySelector('video');
+                            if (otherVideo && otherVideo !== video && !otherVideo.paused) {
+                                otherVideo.pause();
+                                const otherOverlay = other.querySelector('.play-overlay');
+                                if (otherOverlay) {
+                                    otherOverlay.innerHTML = '<i class="fas fa-play-circle"></i>';
+                                }
+                            }
+                        });
+
+                        video.play().catch(function(err) {
+                            // Auto-play may be blocked, but user gesture already happened
+                            console.log('Play attempt:', err);
+                        });
+                        overlay.innerHTML = '<i class="fas fa-pause-circle"></i>';
+                        if (muteBadge) muteBadge.textContent = '🔊 Playing';
+                    } else {
+                        video.pause();
+                        overlay.innerHTML = '<i class="fas fa-play-circle"></i>';
+                        if (muteBadge) muteBadge.textContent = '🔇 Tap to play';
+                    }
+                });
+
+                // When video ends, reset overlay
+                video.addEventListener('ended', function() {
+                    overlay.innerHTML = '<i class="fas fa-play-circle"></i>';
+                    if (muteBadge) muteBadge.textContent = '🔇 Tap to play';
+                });
+
+                // When video is paused externally, update overlay
+                video.addEventListener('pause', function() {
+                    if (!video.ended) {
+                        overlay.innerHTML = '<i class="fas fa-play-circle"></i>';
+                        if (muteBadge) muteBadge.textContent = '🔇 Tap to play';
+                    }
+                });
+
+                // When video plays, update overlay
+                video.addEventListener('play', function() {
+                    overlay.innerHTML = '<i class="fas fa-pause-circle"></i>';
+                    if (muteBadge) muteBadge.textContent = '🔊 Playing';
+                });
+
+                // Handle visibility change to pause when tab is hidden (optional)
+                document.addEventListener('visibilitychange', function() {
+                    if (document.hidden) {
+                        videoWraps.forEach(function(w) {
+                            const vid = w.querySelector('video');
+                            if (vid && !vid.paused) {
+                                vid.pause();
+                                const ov = w.querySelector('.play-overlay');
+                                if (ov) ov.innerHTML = '<i class="fas fa-play-circle"></i>';
+                                const mb = w.querySelector('.mute-badge');
+                                if (mb) mb.textContent = '🔇 Tap to play';
+                            }
+                        });
+                    }
+                });
+            });
+
             // ===== Expose CONFIG for debugging =====
             window.__FRESH_VIDEO_CONFIG = CONFIG;
-
             console.log('✅ Fresh Video – Param Bhakti Live loaded successfully.');
             console.log('📌 Replace CONFIG values with your own:');
             console.log('   - RAZORPAY_LINK: ' + CONFIG.RAZORPAY_LINK);
