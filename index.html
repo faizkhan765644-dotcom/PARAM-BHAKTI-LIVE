@@ -2,7 +2,7 @@
 <html lang="hi">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
     <title>Fresh Video – Param Bhakti Live | ₹599 Subscription</title>
 
     <!-- Google Font: Inter -->
@@ -388,42 +388,58 @@
             cursor: pointer;
         }
 
-        /* Welcome button overlay */
+        /* Welcome button overlay — FIXED for mobile */
         .intro-video-section .welcome-btn {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(109, 40, 217, 0.85);
-            backdrop-filter: blur(6px);
+            background: rgba(109, 40, 217, 0.88);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             color: #fff;
             font-size: 1.6rem;
             font-weight: 700;
-            padding: 20px 40px;
+            padding: 20px 44px;
             border-radius: 60px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.35);
             display: flex;
             align-items: center;
             gap: 14px;
-            box-shadow: 0 12px 40px rgba(109, 40, 217, 0.4);
-            transition: var(--transition);
+            box-shadow: 0 12px 50px rgba(109, 40, 217, 0.5);
+            transition: opacity 0.4s ease, transform 0.3s ease, background 0.3s ease;
             cursor: pointer;
             letter-spacing: 0.02em;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.5s ease, transform 0.3s ease;
+            z-index: 20;
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            min-width: 180px;
+            justify-content: center;
+            font-family: var(--font);
         }
+
         .intro-video-section .welcome-btn.visible {
             opacity: 1;
             pointer-events: auto;
         }
+
         .intro-video-section .welcome-btn:hover {
             background: rgba(91, 33, 182, 0.95);
-            transform: translate(-50%, -50%) scale(1.05);
-            box-shadow: 0 16px 50px rgba(109, 40, 217, 0.6);
+            transform: translate(-50%, -50%) scale(1.04);
+            box-shadow: 0 16px 60px rgba(109, 40, 217, 0.6);
         }
+
+        .intro-video-section .welcome-btn:active {
+            transform: translate(-50%, -50%) scale(0.96);
+            background: rgba(75, 25, 160, 0.95);
+        }
+
         .intro-video-section .welcome-btn i {
             font-size: 2rem;
+            flex-shrink: 0;
         }
 
         /* ===== Hero ===== */
@@ -1306,6 +1322,7 @@
             .intro-video-section .welcome-btn {
                 font-size: 1.3rem;
                 padding: 16px 32px;
+                min-width: 150px;
             }
         }
 
@@ -1334,9 +1351,10 @@
                 font-size: 1.1rem;
                 padding: 14px 28px;
                 gap: 10px;
+                min-width: 140px;
             }
             .intro-video-section .welcome-btn i {
-                font-size: 1.4rem;
+                font-size: 1.5rem;
             }
 
             .hero {
@@ -1498,11 +1516,13 @@
             }
             .intro-video-section .welcome-btn {
                 font-size: 0.9rem;
-                padding: 10px 20px;
+                padding: 12px 22px;
                 gap: 8px;
+                min-width: 120px;
+                border-radius: 50px;
             }
             .intro-video-section .welcome-btn i {
-                font-size: 1.2rem;
+                font-size: 1.3rem;
             }
         }
 
@@ -1536,7 +1556,11 @@
             }
             .intro-video-section .welcome-btn {
                 font-size: 0.8rem;
-                padding: 8px 16px;
+                padding: 10px 18px;
+                min-width: 100px;
+            }
+            .intro-video-section .welcome-btn i {
+                font-size: 1.1rem;
             }
         }
     </style>
@@ -1576,7 +1600,7 @@
         <a href="#buy" class="nav-cta-mobile">Subscribe karein</a>
     </div>
 
-    <!-- ===== INTRO VIDEO BANNER (ABOVE HERO) ===== -->
+    <!-- ===== INTRO VIDEO BANNER (ABOVE HERO) — FIXED FOR MOBILE ===== -->
     <section class="intro-video-section" id="introVideoSection">
         <div class="video-wrapper">
             <video
@@ -1585,17 +1609,17 @@
             muted
             loop
             playsinline
-            preload="metadata"
+            preload="auto"
             src="https://param-bhakti-live.faizkhan765644.workers.dev/introduce%20video.mp4"
             >
             Your browser does not support the video tag.
         </video>
 
-        <!-- Welcome Button (appears if autoplay with sound is blocked) -->
-        <div class="welcome-btn" id="welcomeBtn">
+        <!-- Welcome Button — fixed for mobile -->
+        <button class="welcome-btn" id="welcomeBtn" aria-label="Play video with sound">
             <i class="fas fa-play-circle"></i>
             <span>Welcome</span>
-        </div>
+        </button>
     </div>
 </section>
 
@@ -2143,12 +2167,12 @@
     </div>
 </footer>
 
-<!-- ===== JAVASCRIPT ===== -->
+<!-- ===== JAVASCRIPT — FIXED WELCOME BUTTON FOR MOBILE ===== -->
 <script>
     (function() {
         'use strict';
 
-        // ===== CONFIGURATION – Change these values as needed =====
+        // ===== CONFIGURATION =====
         const CONFIG = {
             RAZORPAY_LINK: 'https://razorpay.me/@freshnewvideo?amount=599',
             DRIVE_LINK: 'YOUR_GOOGLE_DRIVE_FOLDER_LINK',
@@ -2168,76 +2192,160 @@
         const mobileError = document.getElementById('mobileError');
         const payBtn = document.getElementById('payBtn');
 
-        // ===== INTRO VIDEO – AUTOPLAY WITH SOUND (fallback to welcome button) =====
+        // ===== INTRO VIDEO — FIXED FOR MOBILE =====
         const introVideo = document.getElementById('introVideo');
         const welcomeBtn = document.getElementById('welcomeBtn');
 
-        // Function to unmute and play video, then hide button
-        function enableSoundAndPlay() {
+        /**
+         * Enable sound and play the video.
+         * This function is called when the user clicks the welcome button.
+         * It ensures the video loads, unmutes, and plays with sound.
+         */
+        function enableSoundAndPlay(event) {
+            // Prevent default behavior (e.g., if it's a touch event)
+            if (event) {
+                event.preventDefault();
+            }
+
             if (!introVideo) return;
+
+            // If the video isn't loaded enough, load it first
+            if (introVideo.readyState < 2) {
+                introVideo.load();
+            }
+
+            // Unmute the video
             introVideo.muted = false;
-            introVideo.play().catch(function(e) {
-                // If still blocked, keep muted and show button again
-                introVideo.muted = true;
-                welcomeBtn.classList.add('visible');
-            });
-            // Hide welcome button regardless
-            welcomeBtn.classList.remove('visible');
-            // Remove all listeners once sound is enabled
+            introVideo.volume = 1.0;
+
+            // Play the video with sound
+            var playPromise = introVideo.play();
+
+            if (playPromise !== undefined) {
+                playPromise.then(function() {
+                    // Success: video is playing with sound
+                    welcomeBtn.classList.remove('visible');
+                    // Remove all listeners since we're done
+                    removeAllListeners();
+                }).catch(function(err) {
+                    // If play fails, try again with a small delay
+                    console.warn('First play attempt failed:', err);
+                    setTimeout(function() {
+                        introVideo.muted = false;
+                        introVideo.volume = 1.0;
+                        introVideo.play().then(function() {
+                            welcomeBtn.classList.remove('visible');
+                            removeAllListeners();
+                        }).catch(function(e2) {
+                            console.warn('Second play attempt failed:', e2);
+                            // Show button again so user can try again
+                            welcomeBtn.classList.add('visible');
+                        });
+                    }, 300);
+                });
+            } else {
+                // Fallback for browsers without promise support
+                welcomeBtn.classList.remove('visible');
+                removeAllListeners();
+            }
+        }
+
+        /**
+         * Remove all event listeners attached for the welcome button.
+         */
+        function removeAllListeners() {
             document.removeEventListener('click', enableSoundAndPlay);
             document.removeEventListener('touchstart', enableSoundAndPlay);
             document.removeEventListener('keydown', enableSoundAndPlay);
             if (introVideo) {
                 introVideo.removeEventListener('click', enableSoundAndPlay);
+                introVideo.removeEventListener('touchstart', enableSoundAndPlay);
             }
             welcomeBtn.removeEventListener('click', enableSoundAndPlay);
+            welcomeBtn.removeEventListener('touchstart', enableSoundAndPlay);
         }
 
-        // On page load, try to play with sound (autoplay with audio)
-        // Browsers usually block this, so we'll show the welcome button if it fails.
+        /**
+         * Try autoplay with sound on page load.
+         * If it fails, show the welcome button and set up listeners.
+         */
         function tryAutoplayWithSound() {
             if (!introVideo) return;
+
             // Attempt to unmute and play
             introVideo.muted = false;
+            introVideo.volume = 1.0;
+
             var playPromise = introVideo.play();
+
             if (playPromise !== undefined) {
                 playPromise.then(function() {
                     // Success: sound is playing, hide button
                     welcomeBtn.classList.remove('visible');
-                    // Remove global listeners (since we already have sound)
-                    document.removeEventListener('click', enableSoundAndPlay);
-                    document.removeEventListener('touchstart', enableSoundAndPlay);
-                    document.removeEventListener('keydown', enableSoundAndPlay);
-                    introVideo.removeEventListener('click', enableSoundAndPlay);
+                    removeAllListeners();
                 }).catch(function(error) {
-                    // Autoplay with sound blocked – show welcome button
+                    // Autoplay with sound blocked — show welcome button
                     welcomeBtn.classList.add('visible');
-                    // Set up listeners to enable sound on any interaction
-                    document.addEventListener('click', enableSoundAndPlay);
-                    document.addEventListener('touchstart', enableSoundAndPlay);
-                    document.addEventListener('keydown', enableSoundAndPlay);
-                    introVideo.addEventListener('click', enableSoundAndPlay);
-                    welcomeBtn.addEventListener('click', enableSoundAndPlay);
+                    // Set up listeners for user interaction
+                    setupListeners();
                 });
             } else {
                 // Fallback: show button
                 welcomeBtn.classList.add('visible');
-                document.addEventListener('click', enableSoundAndPlay);
-                document.addEventListener('touchstart', enableSoundAndPlay);
-                document.addEventListener('keydown', enableSoundAndPlay);
-                introVideo.addEventListener('click', enableSoundAndPlay);
-                welcomeBtn.addEventListener('click', enableSoundAndPlay);
+                setupListeners();
             }
         }
 
-        // Run on load
-        tryAutoplayWithSound();
+        /**
+         * Set up event listeners for the welcome button and other interactions.
+         */
+        function setupListeners() {
+            // Welcome button: click for desktop, touchstart for mobile
+            welcomeBtn.addEventListener('click', enableSoundAndPlay);
+            welcomeBtn.addEventListener('touchstart', enableSoundAndPlay, { passive: false });
 
-        // Also if video fails to play after visibility change, retry
+            // Also allow clicking/tapping on the video itself to enable sound
+            if (introVideo) {
+                introVideo.addEventListener('click', enableSoundAndPlay);
+                introVideo.addEventListener('touchstart', enableSoundAndPlay, { passive: false });
+            }
+
+            // Global fallback: any click/tap on the page can enable sound
+            // (but only if the button is visible)
+            document.addEventListener('click', function handler(e) {
+                // Only trigger if button is visible and the click wasn't already handled
+                if (welcomeBtn.classList.contains('visible')) {
+                    // Check if the click was on the button or video, which already have handlers
+                    var target = e.target;
+                    if (target === welcomeBtn || (introVideo && target === introVideo)) {
+                        return; // These are handled by their own listeners
+                    }
+                    // Otherwise, trigger the sound enable
+                    enableSoundAndPlay(e);
+                }
+            });
+            document.addEventListener('touchstart', function handler(e) {
+                if (welcomeBtn.classList.contains('visible')) {
+                    var target = e.target;
+                    if (target === welcomeBtn || (introVideo && target === introVideo)) {
+                        return;
+                    }
+                    enableSoundAndPlay(e);
+                }
+            }, { passive: false });
+        }
+
+        // Run on load
+        if (document.readyState === 'complete') {
+            tryAutoplayWithSound();
+        } else {
+            window.addEventListener('load', tryAutoplayWithSound);
+        }
+
+        // Also retry when the page becomes visible again (e.g., user returns to tab)
         document.addEventListener('visibilitychange', function() {
             if (!document.hidden && introVideo) {
-                // If video is paused or not playing, try again
-                if (introVideo.paused) {
+                if (introVideo.paused || introVideo.muted) {
                     tryAutoplayWithSound();
                 }
             }
@@ -2340,7 +2448,6 @@
             };
             console.log('Customer details:', customerData);
 
-            // In production, send data to backend and open Razorpay
             window.open(CONFIG.RAZORPAY_LINK, '_blank');
 
             setTimeout(function() {
@@ -2383,13 +2490,10 @@
             }
         });
 
-        // ===== Expose CONFIG for debugging =====
+        // ===== Expose CONFIG =====
         window.__FRESH_VIDEO_CONFIG = CONFIG;
         console.log('✅ Fresh Video – Param Bhakti Live loaded successfully.');
-        console.log('📌 Replace CONFIG values with your own:');
-        console.log('   - RAZORPAY_LINK: ' + CONFIG.RAZORPAY_LINK);
-        console.log('   - DRIVE_LINK: ' + CONFIG.DRIVE_LINK);
-        console.log('   - WHATSAPP_NUMBER: ' + CONFIG.WHATSAPP_NUMBER);
+        console.log('📌 Welcome button fixed for mobile. Tap the button to play video with sound.');
 
     })();
 </script>
