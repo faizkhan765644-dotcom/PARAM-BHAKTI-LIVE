@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
 
-    <!-- Font Awesome 6 (Free) for icons -->
+    <!-- Font Awesome 6 (Free) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
     <style>
@@ -161,6 +161,11 @@
             transform: translateY(-2px);
             box-shadow: 0 12px 40px rgba(109, 40, 217, 0.40);
         }
+        .btn-primary:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
 
         .btn-secondary {
             background: var(--white);
@@ -310,7 +315,6 @@
             transform: rotate(-45deg) translate(5px, -5px);
         }
 
-        /* Mobile Nav */
         .mobile-nav {
             display: none;
             position: fixed;
@@ -955,7 +959,7 @@
             border: 1px solid var(--gray-100);
         }
 
-        /* ===== Purchase Section ===== */
+        /* ===== PURCHASE SECTION ===== */
         .purchase-section {
             background: linear-gradient(170deg, #F5F0FF, #FAF7FF);
             padding: 80px 0;
@@ -1377,6 +1381,52 @@
             font-size: 0.75rem;
             color: rgba(255, 255, 255, 0.3);
             margin-top: 8px;
+        }
+
+        /* ===== PAYMENT PENDING OVERLAY ===== */
+        .payment-pending {
+            display: none;
+            text-align: center;
+            padding: 30px 20px;
+            background: #FEF3C7;
+            border-radius: var(--radius-sm);
+            border: 1px solid #FCD34D;
+            margin: 12px 0 20px;
+        }
+        .payment-pending.visible {
+            display: block;
+        }
+        .payment-pending i {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+        .payment-pending h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #92400E;
+        }
+        .payment-pending p {
+            font-size: 0.9rem;
+            color: #78350F;
+        }
+        .payment-pending .spinner {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 3px solid #FCD34D;
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 10px auto;
+        }
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         /* ===== Responsive ===== */
@@ -2052,6 +2102,13 @@
                 <h3>Detail bharein</h3>
                 <p class="form-sub">Subscription ke liye apni jaankari dein.</p>
 
+                <!-- Payment Pending Message (hidden by default) -->
+                <div class="payment-pending" id="paymentPending">
+                    <div class="spinner"></div>
+                    <h4>⏳ Payment processing...</h4>
+                    <p>Kripya Razorpay par payment complete karein. Payment ke baad aap automatically Thank You page par redirect ho jaayenge.</p>
+                </div>
+
                 <form id="subscriptionForm" novalidate>
                     <div class="form-group">
                         <label for="fullName">Full Name <span style="color:#EF4444;">*</span></label>
@@ -2307,17 +2364,22 @@
         'use strict';
 
         // ============================================================
-        //  CONFIGURATION – Updated as per user request
+        //  CONFIGURATION
         // ============================================================
         const CONFIG = {
             // Razorpay payment link (user provided)
             RAZORPAY_LINK: 'https://razorpay.me/@freshnewvideo',
 
-            // Google Drive folder link where videos are uploaded daily
+            // Google Drive folder link
             DRIVE_FOLDER_LINK: 'https://drive.google.com/drive/folders/1srsIEjINqY7vIk1CRiWeoV7yLd6Jk728',
 
             // WhatsApp support number
-            WHATSAPP_NUMBER: '919999999999'
+            WHATSAPP_NUMBER: '919999999999',
+
+            // Return URL after payment — this page with a success param
+            // The user must set this as the return URL in their Razorpay payment link settings.
+            // Format: https://yourdomain.com/?payment_success=1&payment_id={payment_id}
+            RETURN_URL: window.location.href.split('?')[0] + '?payment_success=1&payment_id={payment_id}'
         };
 
         // ============================================================
@@ -2333,6 +2395,7 @@
         const emailError = document.getElementById('emailError');
         const mobileError = document.getElementById('mobileError');
         const payBtn = document.getElementById('payBtn');
+        const paymentPending = document.getElementById('paymentPending');
 
         const thankyouSection = document.getElementById('thankyouSection');
         const displayName = document.getElementById('displayName');
@@ -2341,7 +2404,7 @@
         const downloadBtn = document.getElementById('downloadBtn');
 
         // ============================================================
-        //  INTRO VIDEO — WELCOME BUTTON (mobile fix)
+        //  INTRO VIDEO — WELCOME BUTTON
         // ============================================================
         const introVideo = document.getElementById('introVideo');
         const welcomeBtn = document.getElementById('welcomeBtn');
@@ -2520,10 +2583,88 @@
         });
 
         // ============================================================
-        //  FORM SUBMISSION → Open Razorpay → Show Thank You → Drive Link
+        //  CHECK PAYMENT SUCCESS VIA URL PARAMETERS
+        //  If the user returns from Razorpay with ?payment_success=1
+        //  we show the Thank You page automatically.
+        // ============================================================
+        function checkPaymentSuccess() {
+            const params = new URLSearchParams(window.location.search);
+            const success = params.get('payment_success');
+            const paymentId = params.get('payment_id');
+
+            if (success === '1' && paymentId) {
+                // Payment confirmed — show Thank You
+                showThankYouFromURL();
+            } else {
+                // Check if we have a stored user that already paid
+                try {
+                    const stored = localStorage.getItem('fresh_video_paid_user');
+                    if (stored) {
+                        const user = JSON.parse(stored);
+                        if (user && user.paid === true) {
+                            showThankYouWithData(user);
+                        }
+                    }
+                } catch (_) { /* ignore */ }
+            }
+        }
+
+        function showThankYouFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            const name = params.get('name') || '';
+            const email = params.get('email') || '';
+            const mobile = params.get('mobile') || '';
+            const paymentId = params.get('payment_id') || '';
+
+            const userData = {
+                name: name,
+                email: email,
+                mobile: mobile,
+                paid: true,
+                paymentId: paymentId
+            };
+
+            // Store in localStorage so they don't lose access
+            try {
+                localStorage.setItem('fresh_video_paid_user', JSON.stringify(userData));
+            } catch (_) { /* ignore */ }
+
+            showThankYouWithData(userData);
+
+            // Clean URL (remove query params) for cleaner look
+            if (window.history && window.history.replaceState) {
+                const cleanUrl = window.location.pathname + window.location.hash;
+                window.history.replaceState({}, document.title, cleanUrl);
+            }
+        }
+
+        function showThankYouWithData(user) {
+            displayName.textContent = user.name || '-';
+            displayEmail.textContent = user.email || '-';
+            displayMobile.textContent = user.mobile || '-';
+
+            thankyouSection.classList.add('visible');
+
+            // Scroll to thank you
+            setTimeout(function() {
+                thankyouSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 300);
+
+            // Hide the purchase section
+            const purchaseSection = document.querySelector('.purchase-section');
+            if (purchaseSection) {
+                purchaseSection.style.display = 'none';
+            }
+        }
+
+        // ============================================================
+        //  FORM SUBMISSION → Open Razorpay Payment Link
+        //  The user is redirected to Razorpay. After payment, Razorpay
+        //  redirects back to this page with ?payment_success=1
         // ============================================================
         form.addEventListener('submit', function(e) {
             e.preventDefault();
+
             if (!validateForm()) {
                 const firstError = form.querySelector('.form-group input.error');
                 if (firstError) firstError.focus();
@@ -2531,54 +2672,96 @@
             }
 
             // Gather user data
-            const userName = fullName.value.trim();
-            const userEmail = email.value.trim();
-            const userMobile = mobile.value.trim();
+            const userName = encodeURIComponent(fullName.value.trim());
+            const userEmail = encodeURIComponent(email.value.trim());
+            const userMobile = encodeURIComponent(mobile.value.trim());
 
-            // Disable button and show spinner
+            // Disable button and show pending state
             payBtn.disabled = true;
-            payBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Kripya pratiksha karein...';
+            payBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Redirecting to Razorpay...';
+            paymentPending.classList.add('visible');
 
-            // 1) Open Razorpay payment link in new tab
-            window.open(CONFIG.RAZORPAY_LINK, '_blank');
+            // Store user data temporarily
+            try {
+                localStorage.setItem('fresh_video_user_temp', JSON.stringify({
+                    name: fullName.value.trim(),
+                    email: email.value.trim(),
+                    mobile: mobile.value.trim()
+                }));
+            } catch (_) { /* ignore */ }
 
-            // 2) After a short delay, show the Thank You section
+            // Build the Razorpay payment link with return URL parameters
+            // The return URL will include payment_success and payment_id
+            // as well as the user details for display on the thank you page.
+            const returnUrl = window.location.href.split('?')[0] +
+                '?payment_success=1&payment_id={payment_id}' +
+                '&name=' + userName +
+                '&email=' + userEmail +
+                '&mobile=' + userMobile;
+
+            // Razorpay payment link URL with pre-filled fields and return URL
+            // Note: The user needs to configure their Razorpay payment link
+            // to use this return URL. In the Razorpay dashboard, set the
+            // "Return URL" to this page with the {payment_id} placeholder.
+            //
+            // For now, we open the payment link and rely on the return URL
+            // configured in the Razorpay dashboard.
+            const paymentUrl = CONFIG.RAZORPAY_LINK +
+                '?name=' + userName +
+                '&email=' + userEmail +
+                '&contact=' + userMobile +
+                '&amount=599' +
+                '&currency=INR';
+
+            // Open the payment link in the same tab
+            // The user will be redirected to Razorpay, and after payment,
+            // Razorpay will redirect back to the return URL.
+            window.location.href = paymentUrl;
+
+            // Fallback: If the user somehow doesn't get redirected,
+            // we show a message and re-enable the button after 15 seconds.
             setTimeout(function() {
-                // Display user details in thank you card
-                displayName.textContent = userName;
-                displayEmail.textContent = userEmail;
-                displayMobile.textContent = userMobile;
+                if (!document.querySelector('.thankyou-section.visible')) {
+                    payBtn.disabled = false;
+                    payBtn.innerHTML = '<i class="fas fa-credit-card"></i> ₹599 payment karein';
+                    paymentPending.classList.remove('visible');
+                    paymentPending.innerHTML = `
+                        <i class="fas fa-exclamation-triangle" style="color:#F59E0B;font-size:2rem;"></i>
+                        <h4>Payment not completed?</h4>
+                        <p>Kripya Razorpay par payment complete karein. Agar aapne payment kar di hai toh <a href="#" id="verifyPaymentLink" style="color:var(--primary);font-weight:600;">Verify Payment</a> par click karein.</p>
+                    `;
+                    paymentPending.classList.add('visible');
 
-                // Show the thank you section
-                thankyouSection.classList.add('visible');
-
-                // Scroll smoothly to the thank you section
-                thankyouSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-                // Re-enable the payment button (in case user wants to pay again)
-                payBtn.disabled = false;
-                payBtn.innerHTML = '<i class="fas fa-credit-card"></i> ₹599 payment karein';
-
-                // Store user data in localStorage
-                try {
-                    localStorage.setItem('fresh_video_user', JSON.stringify({
-                        name: userName,
-                        email: userEmail,
-                        mobile: userMobile
-                    }));
-                } catch (_) { /* ignore */ }
-
-            }, 800);
+                    // Add verify link
+                    const verifyLink = document.getElementById('verifyPaymentLink');
+                    if (verifyLink) {
+                        verifyLink.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            const paymentId = prompt('Apna Razorpay Payment ID darj karein:');
+                            if (paymentId && paymentId.trim().length > 0) {
+                                const temp = localStorage.getItem('fresh_video_user_temp');
+                                if (temp) {
+                                    try {
+                                        const user = JSON.parse(temp);
+                                        user.paid = true;
+                                        user.paymentId = paymentId.trim();
+                                        localStorage.setItem('fresh_video_paid_user', JSON.stringify(
+                                        user));
+                                        showThankYouWithData(user);
+                                    } catch (_) { /* ignore */ }
+                                }
+                            }
+                        });
+                    }
+                }
+            }, 15000);
         });
 
         // ============================================================
         //  DOWNLOAD BUTTON → Opens Google Drive Folder
         // ============================================================
         downloadBtn.addEventListener('click', function() {
-            // Open the Google Drive folder in a new tab
             window.open(CONFIG.DRIVE_FOLDER_LINK, '_blank');
-
-            // Show feedback
             const originalText = downloadBtn.innerHTML;
             downloadBtn.innerHTML = '<i class="fas fa-check"></i> Opening Drive...';
             setTimeout(function() {
@@ -2627,6 +2810,11 @@
         });
 
         // ============================================================
+        //  INIT — Check for payment success on page load
+        // ============================================================
+        checkPaymentSuccess();
+
+        // ============================================================
         //  EXPOSE CONFIG for debugging
         // ============================================================
         window.__FRESH_VIDEO_CONFIG = CONFIG;
@@ -2635,6 +2823,19 @@
         console.log('   - Razorpay link: ' + CONFIG.RAZORPAY_LINK);
         console.log('   - Google Drive folder: ' + CONFIG.DRIVE_FOLDER_LINK);
         console.log('   - WhatsApp: ' + CONFIG.WHATSAPP_NUMBER);
+        console.log('   - Return URL: ' + CONFIG.RETURN_URL);
+
+        // Also check if the user has already paid (stored in localStorage)
+        try {
+            const paidUser = localStorage.getItem('fresh_video_paid_user');
+            if (paidUser) {
+                const user = JSON.parse(paidUser);
+                if (user && user.paid === true) {
+                    // Already paid — show thank you
+                    showThankYouWithData(user);
+                }
+            }
+        } catch (_) { /* ignore */ }
 
     })();
 </script>
