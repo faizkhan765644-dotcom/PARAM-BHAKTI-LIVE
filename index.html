@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
     <style>
-        /* ===== CSS Variables (easily changeable) ===== */
+        /* ===== CSS Variables ===== */
         :root {
             --primary: #6D28D9;
             --primary-dark: #5B21B6;
@@ -171,17 +171,6 @@
             background: var(--primary);
             color: var(--white);
             border-color: var(--primary);
-        }
-
-        .btn-outline-light {
-            background: transparent;
-            color: var(--white);
-            border-color: rgba(255, 255, 255, 0.4);
-        }
-        .btn-outline-light:hover {
-            background: var(--white);
-            color: var(--primary);
-            border-color: var(--white);
         }
 
         .btn-success {
@@ -359,10 +348,9 @@
             font-weight: 600;
         }
 
-        /* ===== INTRO VIDEO BANNER (ABOVE HERO) ===== */
+        /* ===== INTRO VIDEO BANNER ===== */
         .intro-video-section {
             padding-top: 84px;
-            /* navbar height offset */
             background: #0b0b16;
             position: relative;
             overflow: hidden;
@@ -388,7 +376,6 @@
             cursor: pointer;
         }
 
-        /* Welcome button overlay — FIXED for mobile */
         .intro-video-section .welcome-btn {
             position: absolute;
             top: 50%;
@@ -575,7 +562,6 @@
             color: var(--gray-400);
         }
 
-        /* ===== VIDEO THUMBNAILS WITH ACTUAL VIDEOS - NO OVERLAYS ===== */
         .hero-mockup .mockup-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -634,7 +620,7 @@
             color: var(--primary);
         }
 
-        /* ===== Pricing Card (Subscription Offer) ===== */
+        /* ===== Pricing Card ===== */
         .pricing-section {
             padding: 60px 0 80px;
             background: var(--white);
@@ -799,7 +785,7 @@
             letter-spacing: 0.04em;
         }
 
-        /* ===== VIDEO PREVIEW SECTION — NO OVERLAYS ===== */
+        /* ===== VIDEO PREVIEW ===== */
         .video-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -1127,6 +1113,107 @@
             color: var(--accent);
         }
 
+        /* ===== THANK YOU SECTION (hidden by default) ===== */
+        .thankyou-section {
+            display: none;
+            padding: 80px 0;
+            background: linear-gradient(170deg, #F5F0FF, #FAF7FF);
+            min-height: 60vh;
+        }
+        .thankyou-section.visible {
+            display: block;
+        }
+
+        .thankyou-card {
+            max-width: 640px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-hover);
+            padding: 48px 40px;
+            text-align: center;
+            border: 1px solid rgba(109, 40, 217, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        .thankyou-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--success), var(--primary), var(--secondary));
+        }
+        .thankyou-card .thankyou-icon {
+            font-size: 4rem;
+            color: var(--success);
+            margin-bottom: 16px;
+        }
+        .thankyou-card h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .thankyou-card .thankyou-sub {
+            color: var(--gray-500);
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+        }
+        .thankyou-card .thankyou-desc {
+            color: var(--gray-400);
+            font-size: 0.95rem;
+            margin-bottom: 28px;
+        }
+        .thankyou-card .user-details {
+            background: var(--gray-50);
+            padding: 16px 20px;
+            border-radius: var(--radius-sm);
+            margin-bottom: 24px;
+            text-align: left;
+            border: 1px solid var(--gray-100);
+        }
+        .thankyou-card .user-details p {
+            font-size: 0.9rem;
+            color: var(--gray-600);
+            padding: 4px 0;
+        }
+        .thankyou-card .user-details p strong {
+            color: var(--dark-text);
+        }
+        .thankyou-card .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 44px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: var(--white);
+            box-shadow: 0 8px 30px rgba(22, 163, 74, 0.35);
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-family: var(--font);
+            min-height: 60px;
+        }
+        .thankyou-card .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 40px rgba(22, 163, 74, 0.45);
+        }
+        .thankyou-card .download-btn:active {
+            transform: scale(0.96);
+        }
+        .thankyou-card .download-btn i {
+            font-size: 1.5rem;
+        }
+        .thankyou-card .thankyou-note {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: var(--gray-400);
+        }
+
         /* ===== FAQ Accordion ===== */
         .faq-section {
             background: var(--white);
@@ -1427,6 +1514,20 @@
             .footer .footer-links {
                 gap: 16px;
             }
+
+            .thankyou-card {
+                padding: 32px 20px;
+            }
+            .thankyou-card h2 {
+                font-size: 1.6rem;
+            }
+            .thankyou-card .download-btn {
+                padding: 14px 28px;
+                font-size: 1rem;
+                min-height: 52px;
+                width: 100%;
+                justify-content: center;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1524,6 +1625,21 @@
             .intro-video-section .welcome-btn i {
                 font-size: 1.3rem;
             }
+
+            .thankyou-card {
+                padding: 24px 16px;
+            }
+            .thankyou-card h2 {
+                font-size: 1.3rem;
+            }
+            .thankyou-card .thankyou-icon {
+                font-size: 3rem;
+            }
+            .thankyou-card .download-btn {
+                padding: 12px 20px;
+                font-size: 0.9rem;
+                min-height: 48px;
+            }
         }
 
         @media (max-width: 360px) {
@@ -1548,9 +1664,6 @@
             .purchase-sidebar .plan-price {
                 font-size: 1.6rem;
             }
-            .hero-mockup .mockup-grid .mockup-thumb {
-                aspect-ratio: 16/10;
-            }
             .intro-video-section .video-wrapper video {
                 max-height: 35vh;
             }
@@ -1561,6 +1674,12 @@
             }
             .intro-video-section .welcome-btn i {
                 font-size: 1.1rem;
+            }
+            .thankyou-card h2 {
+                font-size: 1.1rem;
+            }
+            .thankyou-card .thankyou-sub {
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -1600,22 +1719,13 @@
         <a href="#buy" class="nav-cta-mobile">Subscribe karein</a>
     </div>
 
-    <!-- ===== INTRO VIDEO BANNER (ABOVE HERO) — FIXED FOR MOBILE ===== -->
+    <!-- ===== INTRO VIDEO BANNER ===== -->
     <section class="intro-video-section" id="introVideoSection">
         <div class="video-wrapper">
-            <video
-            id="introVideo"
-            autoplay
-            muted
-            loop
-            playsinline
-            preload="auto"
-            src="https://param-bhakti-live.faizkhan765644.workers.dev/introduce%20video.mp4"
-            >
+            <video id="introVideo" autoplay muted loop playsinline preload="auto"
+            src="https://param-bhakti-live.faizkhan765644.workers.dev/introduce%20video.mp4">
             Your browser does not support the video tag.
         </video>
-
-        <!-- Welcome Button — fixed for mobile -->
         <button class="welcome-btn" id="welcomeBtn" aria-label="Play video with sound">
             <i class="fas fa-play-circle"></i>
             <span>Welcome</span>
@@ -1659,22 +1769,18 @@
                 <span class="mockup-price">₹599 <small>/30D</small></span>
             </div>
             <div class="mockup-grid">
-                <!-- Video 1 -->
                 <div class="mockup-video-wrap">
                     <video muted playsinline loop autoplay preload="metadata" src="https://param-bhakti-live.faizkhan765644.workers.dev/Bhakti%20video%201.mp4"></video>
                     <span class="video-label">Bhakti</span>
                 </div>
-                <!-- Video 2 -->
                 <div class="mockup-video-wrap">
                     <video muted playsinline loop autoplay preload="metadata" src="https://param-bhakti-live.faizkhan765644.workers.dev/bhakti%20video%202.2.mp4"></video>
                     <span class="video-label">Bhakti</span>
                 </div>
-                <!-- Video 3 -->
                 <div class="mockup-video-wrap">
                     <video muted playsinline loop autoplay preload="metadata" src="https://param-bhakti-live.faizkhan765644.workers.dev/cartoon.mp4"></video>
                     <span class="video-label">Cartoon</span>
                 </div>
-                <!-- Video 4 -->
                 <div class="mockup-video-wrap">
                     <video muted playsinline loop autoplay preload="metadata" src="https://param-bhakti-live.faizkhan765644.workers.dev/video%20example.mp4"></video>
                     <span class="video-label">Example</span>
@@ -1689,7 +1795,7 @@
     </div>
 </section>
 
-<!-- ===== PRICING CARD (Subscription Offer) ===== -->
+<!-- ===== PRICING CARD ===== -->
 <section class="pricing-section" id="pricing">
     <div class="container">
         <div class="pricing-card">
@@ -1807,7 +1913,7 @@
     </div>
 </section>
 
-<!-- ===== VIDEO PREVIEW SECTION — NO OVERLAYS ===== -->
+<!-- ===== VIDEO PREVIEW ===== -->
 <section class="section-padding" id="preview" style="background: var(--light-bg);">
     <div class="container">
         <div class="text-center">
@@ -1816,7 +1922,6 @@
             <p class="section-subtitle">Fresh, engaging and ready-to-use video content.</p>
         </div>
         <div class="video-grid">
-            <!-- Bhakti Video 1 -->
             <div class="video-card">
                 <div class="video-thumb">
                     <video muted playsinline loop autoplay preload="metadata" src="https://param-bhakti-live.faizkhan765644.workers.dev/Bhakti%20video%201.mp4"></video>
@@ -1827,8 +1932,6 @@
                     <p>Devotional bhakti content</p>
                 </div>
             </div>
-
-            <!-- Bhakti Video 2 -->
             <div class="video-card">
                 <div class="video-thumb">
                     <video muted playsinline loop autoplay preload="metadata" src="https://param-bhakti-live.faizkhan765644.workers.dev/bhakti%20video%202.2.mp4"></video>
@@ -1839,8 +1942,6 @@
                     <p>Devotional bhakti content</p>
                 </div>
             </div>
-
-            <!-- Entertainment (Cartoon) -->
             <div class="video-card">
                 <div class="video-thumb">
                     <video muted playsinline loop autoplay preload="metadata" src="https://param-bhakti-live.faizkhan765644.workers.dev/cartoon.mp4"></video>
@@ -1851,8 +1952,6 @@
                     <p>Fun cartoon entertainment clip</p>
                 </div>
             </div>
-
-            <!-- Example Video -->
             <div class="video-card">
                 <div class="video-thumb">
                     <video muted playsinline loop autoplay preload="metadata" src="https://param-bhakti-live.faizkhan765644.workers.dev/video%20example.mp4"></video>
@@ -2033,6 +2132,41 @@
     </div>
 </section>
 
+<!-- ===== THANK YOU SECTION (hidden by default) ===== -->
+<section class="thankyou-section" id="thankyouSection">
+    <div class="container">
+        <div class="thankyou-card">
+            <div class="thankyou-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2>🎉 Dhanyavaad! Subscription successful!</h2>
+            <p class="thankyou-sub">Aapka Fresh Video Subscription confirm ho gaya hai.</p>
+            <p class="thankyou-desc">Aapki details neeche di gayi hain. Ab neeche diye gaye download button par click karke apni files download karein.</p>
+
+            <div class="user-details" id="userDetailsDisplay">
+                <p><strong>Naam:</strong> <span id="displayName">-</span></p>
+                <p><strong>Email:</strong> <span id="displayEmail">-</span></p>
+                <p><strong>Mobile:</strong> <span id="displayMobile">-</span></p>
+                <p><strong>Plan:</strong> Fresh Video Subscription – ₹599 / 30 Days</p>
+            </div>
+
+            <!-- Download Button -->
+            <button class="download-btn" id="downloadBtn">
+                <i class="fas fa-download"></i> Download File
+            </button>
+
+            <p class="thankyou-note">
+                <i class="fas fa-info-circle"></i>
+                Agar download start nahi hota toh upar diye gaye link par click karein.
+            </p>
+            <p class="thankyou-note" style="margin-top:8px;">
+                <i class="fas fa-envelope"></i>
+                Access link aapke email par bhi bhej diya gaya hai.
+            </p>
+        </div>
+    </div>
+</section>
+
 <!-- ===== FAQ SECTION ===== -->
 <section class="faq-section" id="faq">
     <div class="container">
@@ -2167,20 +2301,30 @@
     </div>
 </footer>
 
-<!-- ===== JAVASCRIPT — FIXED WELCOME BUTTON FOR MOBILE ===== -->
+<!-- ===== JAVASCRIPT ===== -->
 <script>
     (function() {
         'use strict';
 
-        // ===== CONFIGURATION =====
+        // ============================================================
+        //  CONFIGURATION – Change these values as needed
+        // ============================================================
         const CONFIG = {
-            RAZORPAY_LINK: 'https://razorpay.me/@freshnewvideo?amount=599',
-            DRIVE_LINK: 'YOUR_GOOGLE_DRIVE_FOLDER_LINK',
-            WHATSAPP_NUMBER: '919999999999',
-            THANK_YOU_PAGE: 'thank-you.html'
+            // Razorpay payment link (user provided)
+            RAZORPAY_LINK: 'https://razorpay.me/@freshnewvideo',
+
+            // File to download after payment (user can change this)
+            // You can put any file URL here (PDF, ZIP, video, etc.)
+            DOWNLOAD_FILE_URL: 'https://param-bhakti-live.faizkhan765644.workers.dev/introduce%20video.mp4',
+            DOWNLOAD_FILE_NAME: 'Fresh_Video_Sample.mp4',
+
+            // WhatsApp support number
+            WHATSAPP_NUMBER: '919999999999'
         };
 
-        // ===== DOM refs =====
+        // ============================================================
+        //  DOM refs
+        // ============================================================
         const hamburger = document.getElementById('hamburger');
         const mobileNav = document.getElementById('mobileNav');
         const form = document.getElementById('subscriptionForm');
@@ -2192,67 +2336,47 @@
         const mobileError = document.getElementById('mobileError');
         const payBtn = document.getElementById('payBtn');
 
-        // ===== INTRO VIDEO — FIXED FOR MOBILE =====
+        const thankyouSection = document.getElementById('thankyouSection');
+        const displayName = document.getElementById('displayName');
+        const displayEmail = document.getElementById('displayEmail');
+        const displayMobile = document.getElementById('displayMobile');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        // ============================================================
+        //  INTRO VIDEO — WELCOME BUTTON (mobile fix)
+        // ============================================================
         const introVideo = document.getElementById('introVideo');
         const welcomeBtn = document.getElementById('welcomeBtn');
 
-        /**
-         * Enable sound and play the video.
-         * This function is called when the user clicks the welcome button.
-         * It ensures the video loads, unmutes, and plays with sound.
-         */
         function enableSoundAndPlay(event) {
-            // Prevent default behavior (e.g., if it's a touch event)
-            if (event) {
-                event.preventDefault();
-            }
-
+            if (event) event.preventDefault();
             if (!introVideo) return;
-
-            // If the video isn't loaded enough, load it first
-            if (introVideo.readyState < 2) {
-                introVideo.load();
-            }
-
-            // Unmute the video
+            if (introVideo.readyState < 2) introVideo.load();
             introVideo.muted = false;
             introVideo.volume = 1.0;
-
-            // Play the video with sound
             var playPromise = introVideo.play();
-
             if (playPromise !== undefined) {
                 playPromise.then(function() {
-                    // Success: video is playing with sound
                     welcomeBtn.classList.remove('visible');
-                    // Remove all listeners since we're done
                     removeAllListeners();
                 }).catch(function(err) {
-                    // If play fails, try again with a small delay
-                    console.warn('First play attempt failed:', err);
                     setTimeout(function() {
                         introVideo.muted = false;
                         introVideo.volume = 1.0;
                         introVideo.play().then(function() {
                             welcomeBtn.classList.remove('visible');
                             removeAllListeners();
-                        }).catch(function(e2) {
-                            console.warn('Second play attempt failed:', e2);
-                            // Show button again so user can try again
+                        }).catch(function() {
                             welcomeBtn.classList.add('visible');
                         });
                     }, 300);
                 });
             } else {
-                // Fallback for browsers without promise support
                 welcomeBtn.classList.remove('visible');
                 removeAllListeners();
             }
         }
 
-        /**
-         * Remove all event listeners attached for the welcome button.
-         */
         function removeAllListeners() {
             document.removeEventListener('click', enableSoundAndPlay);
             document.removeEventListener('touchstart', enableSoundAndPlay);
@@ -2265,84 +2389,54 @@
             welcomeBtn.removeEventListener('touchstart', enableSoundAndPlay);
         }
 
-        /**
-         * Try autoplay with sound on page load.
-         * If it fails, show the welcome button and set up listeners.
-         */
         function tryAutoplayWithSound() {
             if (!introVideo) return;
-
-            // Attempt to unmute and play
             introVideo.muted = false;
             introVideo.volume = 1.0;
-
             var playPromise = introVideo.play();
-
             if (playPromise !== undefined) {
                 playPromise.then(function() {
-                    // Success: sound is playing, hide button
                     welcomeBtn.classList.remove('visible');
                     removeAllListeners();
-                }).catch(function(error) {
-                    // Autoplay with sound blocked — show welcome button
+                }).catch(function() {
                     welcomeBtn.classList.add('visible');
-                    // Set up listeners for user interaction
                     setupListeners();
                 });
             } else {
-                // Fallback: show button
                 welcomeBtn.classList.add('visible');
                 setupListeners();
             }
         }
 
-        /**
-         * Set up event listeners for the welcome button and other interactions.
-         */
         function setupListeners() {
-            // Welcome button: click for desktop, touchstart for mobile
             welcomeBtn.addEventListener('click', enableSoundAndPlay);
             welcomeBtn.addEventListener('touchstart', enableSoundAndPlay, { passive: false });
-
-            // Also allow clicking/tapping on the video itself to enable sound
             if (introVideo) {
                 introVideo.addEventListener('click', enableSoundAndPlay);
                 introVideo.addEventListener('touchstart', enableSoundAndPlay, { passive: false });
             }
-
-            // Global fallback: any click/tap on the page can enable sound
-            // (but only if the button is visible)
             document.addEventListener('click', function handler(e) {
-                // Only trigger if button is visible and the click wasn't already handled
                 if (welcomeBtn.classList.contains('visible')) {
-                    // Check if the click was on the button or video, which already have handlers
                     var target = e.target;
-                    if (target === welcomeBtn || (introVideo && target === introVideo)) {
-                        return; // These are handled by their own listeners
-                    }
-                    // Otherwise, trigger the sound enable
+                    if (target === welcomeBtn || (introVideo && target === introVideo)) return;
                     enableSoundAndPlay(e);
                 }
             });
             document.addEventListener('touchstart', function handler(e) {
                 if (welcomeBtn.classList.contains('visible')) {
                     var target = e.target;
-                    if (target === welcomeBtn || (introVideo && target === introVideo)) {
-                        return;
-                    }
+                    if (target === welcomeBtn || (introVideo && target === introVideo)) return;
                     enableSoundAndPlay(e);
                 }
             }, { passive: false });
         }
 
-        // Run on load
         if (document.readyState === 'complete') {
             tryAutoplayWithSound();
         } else {
             window.addEventListener('load', tryAutoplayWithSound);
         }
 
-        // Also retry when the page becomes visible again (e.g., user returns to tab)
         document.addEventListener('visibilitychange', function() {
             if (!document.hidden && introVideo) {
                 if (introVideo.paused || introVideo.muted) {
@@ -2351,13 +2445,14 @@
             }
         });
 
-        // ===== Mobile menu =====
+        // ============================================================
+        //  Mobile menu
+        // ============================================================
         hamburger.addEventListener('click', function() {
             const isOpen = this.classList.toggle('active');
             mobileNav.classList.toggle('open');
             this.setAttribute('aria-expanded', isOpen);
         });
-
         mobileNav.querySelectorAll('a').forEach(function(link) {
             link.addEventListener('click', function() {
                 hamburger.classList.remove('active');
@@ -2366,7 +2461,9 @@
             });
         });
 
-        // ===== FAQ Accordion =====
+        // ============================================================
+        //  FAQ Accordion
+        // ============================================================
         const faqItems = document.querySelectorAll('.faq-item');
         faqItems.forEach(function(item) {
             const question = item.querySelector('.faq-question');
@@ -2383,7 +2480,9 @@
             });
         });
 
-        // ===== Form validation =====
+        // ============================================================
+        //  Form validation
+        // ============================================================
         function validateField(field, errorEl, condition) {
             if (!condition) {
                 field.classList.add('error');
@@ -2398,18 +2497,15 @@
 
         function validateForm() {
             const nameValid = validateField(
-                fullName,
-                nameError,
+                fullName, nameError,
                 fullName.value.trim().length >= 2
             );
             const emailValid = validateField(
-                email,
-                emailError,
+                email, emailError,
                 /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())
             );
             const mobileValid = validateField(
-                mobile,
-                mobileError,
+                mobile, mobileError,
                 /^[0-9]{10}$/.test(mobile.value.trim())
             );
             return nameValid && emailValid && mobileValid;
@@ -2425,7 +2521,9 @@
             validateField(this, mobileError, /^[0-9]{10}$/.test(this.value.trim()));
         });
 
-        // ===== Form submission =====
+        // ============================================================
+        //  FORM SUBMISSION → Open Razorpay → Show Thank You → Download
+        // ============================================================
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             if (!validateForm()) {
@@ -2434,36 +2532,80 @@
                 return;
             }
 
+            // Gather user data
+            const userName = fullName.value.trim();
+            const userEmail = email.value.trim();
+            const userMobile = mobile.value.trim();
+
+            // Disable button and show spinner
             payBtn.disabled = true;
             payBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Kripya pratiksha karein...';
 
-            const customerData = {
-                name: fullName.value.trim(),
-                email: email.value.trim(),
-                mobile: mobile.value.trim(),
-                plan: 'Fresh Video Subscription',
-                price: '₹599',
-                duration: '30 Days',
-                dailyVideos: '4'
-            };
-            console.log('Customer details:', customerData);
-
+            // 1) Open Razorpay payment link in new tab
             window.open(CONFIG.RAZORPAY_LINK, '_blank');
 
+            // 2) After a short delay, show the Thank You section
             setTimeout(function() {
+                // Display user details in thank you card
+                displayName.textContent = userName;
+                displayEmail.textContent = userEmail;
+                displayMobile.textContent = userMobile;
+
+                // Show the thank you section
+                thankyouSection.classList.add('visible');
+
+                // Scroll smoothly to the thank you section
+                thankyouSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                // Re-enable the payment button (in case user wants to pay again)
                 payBtn.disabled = false;
                 payBtn.innerHTML = '<i class="fas fa-credit-card"></i> ₹599 payment karein';
+
+                // Store user data in localStorage for the download handler
+                try {
+                    localStorage.setItem('fresh_video_user', JSON.stringify({
+                        name: userName,
+                        email: userEmail,
+                        mobile: userMobile
+                    }));
+                } catch (_) { /* ignore */ }
+
+            }, 800); // small delay so the payment tab opens first
+        });
+
+        // ============================================================
+        //  DOWNLOAD BUTTON — downloads the file from CONFIG
+        // ============================================================
+        downloadBtn.addEventListener('click', function() {
+            // Create an anchor element and trigger download
+            const link = document.createElement('a');
+            link.href = CONFIG.DOWNLOAD_FILE_URL;
+            link.download = CONFIG.DOWNLOAD_FILE_NAME;
+            link.target = '_blank';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            // Also show a small feedback
+            const originalText = downloadBtn.innerHTML;
+            downloadBtn.innerHTML = '<i class="fas fa-check"></i> Downloading...';
+            setTimeout(function() {
+                downloadBtn.innerHTML = originalText;
             }, 3000);
         });
 
-        // ===== WhatsApp support =====
+        // ============================================================
+        //  WHATSAPP SUPPORT
+        // ============================================================
         const wspLink = document.getElementById('whatsappSupport');
         if (wspLink) {
             wspLink.href = 'https://wa.me/' + CONFIG.WHATSAPP_NUMBER +
                 '?text=Hi%2C%20I%20need%20help%20with%20my%20Fresh%20Video%20subscription.';
         }
 
-        // ===== Smooth scroll =====
+        // ============================================================
+        //  SMOOTH SCROLL
+        // ============================================================
         document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
             anchor.addEventListener('click', function(e) {
                 const targetId = this.getAttribute('href');
@@ -2478,7 +2620,9 @@
             });
         });
 
-        // ===== Navbar shadow =====
+        // ============================================================
+        //  NAVBAR SHADOW
+        // ============================================================
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', function() {
             if (window.scrollY > 20) {
@@ -2490,10 +2634,15 @@
             }
         });
 
-        // ===== Expose CONFIG =====
+        // ============================================================
+        //  EXPOSE CONFIG for debugging
+        // ============================================================
         window.__FRESH_VIDEO_CONFIG = CONFIG;
         console.log('✅ Fresh Video – Param Bhakti Live loaded successfully.');
-        console.log('📌 Welcome button fixed for mobile. Tap the button to play video with sound.');
+        console.log('📌 Payment flow:');
+        console.log('   - Razorpay link: ' + CONFIG.RAZORPAY_LINK);
+        console.log('   - Download file: ' + CONFIG.DOWNLOAD_FILE_URL);
+        console.log('   - WhatsApp: ' + CONFIG.WHATSAPP_NUMBER);
 
     })();
 </script>
