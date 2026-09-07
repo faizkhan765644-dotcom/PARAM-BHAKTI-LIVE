@@ -2364,16 +2364,13 @@
         'use strict';
 
         // ============================================================
-        //  CONFIGURATION — UPDATED URL (user requested change)
-        //  IMPORTANT: Replace this URL with your actual Razorpay payment link.
-        //  Make sure the payment link is configured for ₹599 and has the
-        //  correct return URL set in the Razorpay dashboard.
+        //  CONFIGURATION
+        //  ✅ UPDATED: Razorpay payment link as requested by the user.
+        //  This link already includes the encrypted amount parameter.
         // ============================================================
         const CONFIG = {
-            // UPDATED: New Razorpay payment link (user requested change)
-            // The user must create a payment link on Razorpay for ₹599
-            // and set the return URL to this page with ?payment_success=1
-            RAZORPAY_LINK: 'https://razorpay.me/@freshnewvideo',
+            // ✅ UPDATED: User's specific Razorpay payment link with encrypted amount
+            RAZORPAY_LINK: 'https://razorpay.me/@freshnewvideo?amount=QmsUqSRscbBFbActEhLNwg%3D%3D',
 
             // Google Drive folder link (unchanged)
             DRIVE_FOLDER_LINK: 'https://drive.google.com/drive/folders/1srsIEjINqY7vIk1CRiWeoV7yLd6Jk728',
@@ -2658,11 +2655,14 @@
         }
 
         // ============================================================
-        //  FORM SUBMISSION → Open Razorpay Payment Link
-        //  The user is redirected to Razorpay. After payment, Razorpay
-        //  redirects back to this page with ?payment_success=1
-        //  IMPORTANT: The user must configure the return URL in their
-        //  Razorpay dashboard to include ?payment_success=1&payment_id={payment_id}
+        //  FORM SUBMISSION → Open the user's Razorpay Payment Link
+        //  When the user clicks the payment button, they are redirected
+        //  directly to the specific Razorpay link provided by the user.
+        //  The link already has the encrypted amount parameter.
+        //
+        //  IMPORTANT: The user MUST configure the "Return URL" in their
+        //  Razorpay dashboard to point back to this page with:
+        //  ?payment_success=1&payment_id={payment_id}&name={name}&email={email}&mobile={mobile}
         // ============================================================
         form.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -2683,7 +2683,7 @@
             payBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Redirecting to Razorpay...';
             paymentPending.classList.add('visible');
 
-            // Store user data temporarily
+            // Store user data temporarily in localStorage
             try {
                 localStorage.setItem('fresh_video_user_temp', JSON.stringify({
                     name: fullName.value.trim(),
@@ -2692,29 +2692,14 @@
                 }));
             } catch (_) { /* ignore */ }
 
-            // Build the Razorpay payment link with return URL parameters
-            // The return URL will include payment_success and payment_id
-            // as well as the user details for display on the thank you page.
-            const returnUrl = window.location.href.split('?')[0] +
-                '?payment_success=1&payment_id={payment_id}' +
-                '&name=' + userName +
-                '&email=' + userEmail +
-                '&mobile=' + userMobile;
-
-            // Razorpay payment link URL with pre-filled fields and return URL
-            // The user needs to configure their Razorpay payment link
-            // to use this return URL. In the Razorpay dashboard, set the
-            // "Return URL" to this page with the {payment_id} placeholder.
-            const paymentUrl = CONFIG.RAZORPAY_LINK +
-                '?name=' + userName +
-                '&email=' + userEmail +
-                '&contact=' + userMobile +
-                '&amount=599' +
-                '&currency=INR';
+            // ════════════════════════════════════════════════════════
+            //  ✅ UPDATED: Use the user's Razorpay link directly.
+            //  The link already contains the encrypted amount.
+            //  No extra parameters are added to avoid breaking the link.
+            // ════════════════════════════════════════════════════════
+            const paymentUrl = CONFIG.RAZORPAY_LINK;
 
             // Open the payment link in the same tab
-            // The user will be redirected to Razorpay, and after payment,
-            // Razorpay will redirect back to the return URL.
             window.location.href = paymentUrl;
 
             // Fallback: If the user somehow doesn't get redirected,
@@ -2822,8 +2807,8 @@
         console.log('   - Razorpay link: ' + CONFIG.RAZORPAY_LINK);
         console.log('   - Google Drive folder: ' + CONFIG.DRIVE_FOLDER_LINK);
         console.log('   - WhatsApp: ' + CONFIG.WHATSAPP_NUMBER);
-        console.log('   - IMPORTANT: Configure return URL in Razorpay dashboard to: ' + window.location.href.split('?')[0] +
-            '?payment_success=1&payment_id={payment_id}');
+        console.log('   ⚠️  IMPORTANT: Configure return URL in Razorpay dashboard to: ' + window.location.href.split('?')[0] +
+            '?payment_success=1&payment_id={payment_id}&name={name}&email={email}&mobile={mobile}');
 
         // Also check if the user has already paid (stored in localStorage)
         try {
