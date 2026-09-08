@@ -1117,107 +1117,6 @@
             color: var(--accent);
         }
 
-        /* ===== THANK YOU SECTION (hidden by default) ===== */
-        .thankyou-section {
-            display: none;
-            padding: 80px 0;
-            background: linear-gradient(170deg, #F5F0FF, #FAF7FF);
-            min-height: 60vh;
-        }
-        .thankyou-section.visible {
-            display: block;
-        }
-
-        .thankyou-card {
-            max-width: 640px;
-            margin: 0 auto;
-            background: var(--white);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-hover);
-            padding: 48px 40px;
-            text-align: center;
-            border: 1px solid rgba(109, 40, 217, 0.08);
-            position: relative;
-            overflow: hidden;
-        }
-        .thankyou-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--success), var(--primary), var(--secondary));
-        }
-        .thankyou-card .thankyou-icon {
-            font-size: 4rem;
-            color: var(--success);
-            margin-bottom: 16px;
-        }
-        .thankyou-card h2 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-        .thankyou-card .thankyou-sub {
-            color: var(--gray-500);
-            font-size: 1.05rem;
-            margin-bottom: 8px;
-        }
-        .thankyou-card .thankyou-desc {
-            color: var(--gray-400);
-            font-size: 0.95rem;
-            margin-bottom: 28px;
-        }
-        .thankyou-card .user-details {
-            background: var(--gray-50);
-            padding: 16px 20px;
-            border-radius: var(--radius-sm);
-            margin-bottom: 24px;
-            text-align: left;
-            border: 1px solid var(--gray-100);
-        }
-        .thankyou-card .user-details p {
-            font-size: 0.9rem;
-            color: var(--gray-600);
-            padding: 4px 0;
-        }
-        .thankyou-card .user-details p strong {
-            color: var(--dark-text);
-        }
-        .thankyou-card .download-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            padding: 16px 44px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            border-radius: 50px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: var(--white);
-            box-shadow: 0 8px 30px rgba(109, 40, 217, 0.35);
-            transition: var(--transition);
-            border: none;
-            cursor: pointer;
-            font-family: var(--font);
-            min-height: 60px;
-        }
-        .thankyou-card .download-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 14px 40px rgba(109, 40, 217, 0.45);
-        }
-        .thankyou-card .download-btn:active {
-            transform: scale(0.96);
-        }
-        .thankyou-card .download-btn i {
-            font-size: 1.5rem;
-        }
-        .thankyou-card .thankyou-note {
-            margin-top: 20px;
-            font-size: 0.8rem;
-            color: var(--gray-400);
-        }
-
         /* ===== FAQ Accordion ===== */
         .faq-section {
             background: var(--white);
@@ -1564,20 +1463,6 @@
             .footer .footer-links {
                 gap: 16px;
             }
-
-            .thankyou-card {
-                padding: 32px 20px;
-            }
-            .thankyou-card h2 {
-                font-size: 1.6rem;
-            }
-            .thankyou-card .download-btn {
-                padding: 14px 28px;
-                font-size: 1rem;
-                min-height: 52px;
-                width: 100%;
-                justify-content: center;
-            }
         }
 
         @media (max-width: 480px) {
@@ -1675,21 +1560,6 @@
             .intro-video-section .welcome-btn i {
                 font-size: 1.3rem;
             }
-
-            .thankyou-card {
-                padding: 24px 16px;
-            }
-            .thankyou-card h2 {
-                font-size: 1.3rem;
-            }
-            .thankyou-card .thankyou-icon {
-                font-size: 3rem;
-            }
-            .thankyou-card .download-btn {
-                padding: 12px 20px;
-                font-size: 0.9rem;
-                min-height: 48px;
-            }
         }
 
         @media (max-width: 360px) {
@@ -1724,12 +1594,6 @@
             }
             .intro-video-section .welcome-btn i {
                 font-size: 1.1rem;
-            }
-            .thankyou-card h2 {
-                font-size: 1.1rem;
-            }
-            .thankyou-card .thankyou-sub {
-                font-size: 0.9rem;
             }
         }
     </style>
@@ -2106,7 +1970,7 @@
                 <div class="payment-pending" id="paymentPending">
                     <div class="spinner"></div>
                     <h4>⏳ Payment processing...</h4>
-                    <p>Kripya Razorpay par payment complete karein. Payment ke baad aap automatically Thank You page par redirect ho jaayenge.</p>
+                    <p>Kripya Razorpay par payment complete karein. Payment ke baad aap automatically wapas is page par aa jaayenge.</p>
                 </div>
 
                 <form id="subscriptionForm" novalidate>
@@ -2189,41 +2053,6 @@
     </div>
 </section>
 
-<!-- ===== THANK YOU SECTION (hidden by default) ===== -->
-<section class="thankyou-section" id="thankyouSection">
-    <div class="container">
-        <div class="thankyou-card">
-            <div class="thankyou-icon">
-                <i class="fas fa-check-circle"></i>
-            </div>
-            <h2>🎉 Dhanyavaad! Subscription successful!</h2>
-            <p class="thankyou-sub">Aapka Fresh Video Subscription confirm ho gaya hai.</p>
-            <p class="thankyou-desc">Aapki details neeche di gayi hain. Ab neeche diye gaye button par click karke apni files access karein.</p>
-
-            <div class="user-details" id="userDetailsDisplay">
-                <p><strong>Naam:</strong> <span id="displayName">-</span></p>
-                <p><strong>Email:</strong> <span id="displayEmail">-</span></p>
-                <p><strong>Mobile:</strong> <span id="displayMobile">-</span></p>
-                <p><strong>Plan:</strong> Fresh Video Subscription – ₹599 / 30 Days</p>
-            </div>
-
-            <!-- Download Button → Google Drive Link -->
-            <button class="download-btn" id="downloadBtn">
-                <i class="fas fa-folder-open"></i> Access Videos (Google Drive)
-            </button>
-
-            <p class="thankyou-note">
-                <i class="fas fa-info-circle"></i>
-                Click karke Drive folder mein jayein jahan daily nayi videos upload ki jaati hain.
-            </p>
-            <p class="thankyou-note" style="margin-top:8px;">
-                <i class="fas fa-envelope"></i>
-                Access link aapke email par bhi bhej diya gaya hai.
-            </p>
-        </div>
-    </div>
-</section>
-
 <!-- ===== FAQ SECTION ===== -->
 <section class="faq-section" id="faq">
     <div class="container">
@@ -2272,7 +2101,7 @@
                     Payment ke baad access kaise milega?
                     <span class="faq-toggle"><i class="fas fa-chevron-down"></i></span>
                 </button>
-                <div class="faq-answer">Payment successful hone ke baad thank-you page par access instructions aur Drive button uplabdh hoga.</div>
+                <div class="faq-answer">Payment successful hone ke baad aapko Google Drive link mil jayega. Access link aapke email par bhi bheja jayega.</div>
             </div>
             <div class="faq-item">
                 <button class="faq-question" aria-expanded="false">
@@ -2365,17 +2194,16 @@
 
         // ============================================================
         //  CONFIGURATION
-        //  ✅ UPDATED: Razorpay payment link as requested by the user.
-        //  This link already includes the encrypted amount parameter.
+        //  ✅ Razorpay payment link with encrypted amount
         // ============================================================
         const CONFIG = {
-            // ✅ UPDATED: User's specific Razorpay payment link with encrypted amount
+            // Razorpay payment link
             RAZORPAY_LINK: 'https://razorpay.me/@freshnewvideo?amount=QmsUqSRscbBFbActEhLNwg%3D%3D',
 
-            // Google Drive folder link (unchanged)
+            // Google Drive folder link
             DRIVE_FOLDER_LINK: 'https://drive.google.com/drive/folders/1srsIEjINqY7vIk1CRiWeoV7yLd6Jk728',
 
-            // WhatsApp support number (unchanged)
+            // WhatsApp support number
             WHATSAPP_NUMBER: '919999999999'
         };
 
@@ -2393,12 +2221,6 @@
         const mobileError = document.getElementById('mobileError');
         const payBtn = document.getElementById('payBtn');
         const paymentPending = document.getElementById('paymentPending');
-
-        const thankyouSection = document.getElementById('thankyouSection');
-        const displayName = document.getElementById('displayName');
-        const displayEmail = document.getElementById('displayEmail');
-        const displayMobile = document.getElementById('displayMobile');
-        const downloadBtn = document.getElementById('downloadBtn');
 
         // ============================================================
         //  INTRO VIDEO — WELCOME BUTTON
@@ -2580,89 +2402,7 @@
         });
 
         // ============================================================
-        //  CHECK PAYMENT SUCCESS VIA URL PARAMETERS
-        //  If the user returns from Razorpay with ?payment_success=1
-        //  we show the Thank You page automatically.
-        // ============================================================
-        function checkPaymentSuccess() {
-            const params = new URLSearchParams(window.location.search);
-            const success = params.get('payment_success');
-            const paymentId = params.get('payment_id');
-
-            if (success === '1' && paymentId) {
-                // Payment confirmed — show Thank You
-                showThankYouFromURL();
-            } else {
-                // Check if we have a stored user that already paid
-                try {
-                    const stored = localStorage.getItem('fresh_video_paid_user');
-                    if (stored) {
-                        const user = JSON.parse(stored);
-                        if (user && user.paid === true) {
-                            showThankYouWithData(user);
-                        }
-                    }
-                } catch (_) { /* ignore */ }
-            }
-        }
-
-        function showThankYouFromURL() {
-            const params = new URLSearchParams(window.location.search);
-            const name = params.get('name') || '';
-            const email = params.get('email') || '';
-            const mobile = params.get('mobile') || '';
-            const paymentId = params.get('payment_id') || '';
-
-            const userData = {
-                name: name,
-                email: email,
-                mobile: mobile,
-                paid: true,
-                paymentId: paymentId
-            };
-
-            // Store in localStorage so they don't lose access
-            try {
-                localStorage.setItem('fresh_video_paid_user', JSON.stringify(userData));
-            } catch (_) { /* ignore */ }
-
-            showThankYouWithData(userData);
-
-            // Clean URL (remove query params) for cleaner look
-            if (window.history && window.history.replaceState) {
-                const cleanUrl = window.location.pathname + window.location.hash;
-                window.history.replaceState({}, document.title, cleanUrl);
-            }
-        }
-
-        function showThankYouWithData(user) {
-            displayName.textContent = user.name || '-';
-            displayEmail.textContent = user.email || '-';
-            displayMobile.textContent = user.mobile || '-';
-
-            thankyouSection.classList.add('visible');
-
-            // Scroll to thank you
-            setTimeout(function() {
-                thankyouSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 300);
-
-            // Hide the purchase section
-            const purchaseSection = document.querySelector('.purchase-section');
-            if (purchaseSection) {
-                purchaseSection.style.display = 'none';
-            }
-        }
-
-        // ============================================================
-        //  FORM SUBMISSION → Open the user's Razorpay Payment Link
-        //  When the user clicks the payment button, they are redirected
-        //  directly to the specific Razorpay link provided by the user.
-        //  The link already has the encrypted amount parameter.
-        //
-        //  IMPORTANT: The user MUST configure the "Return URL" in their
-        //  Razorpay dashboard to point back to this page with:
-        //  ?payment_success=1&payment_id={payment_id}&name={name}&email={email}&mobile={mobile}
+        //  FORM SUBMISSION → Open Razorpay Payment Link
         // ============================================================
         form.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -2673,17 +2413,7 @@
                 return;
             }
 
-            // Gather user data
-            const userName = encodeURIComponent(fullName.value.trim());
-            const userEmail = encodeURIComponent(email.value.trim());
-            const userMobile = encodeURIComponent(mobile.value.trim());
-
-            // Disable button and show pending state
-            payBtn.disabled = true;
-            payBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Redirecting to Razorpay...';
-            paymentPending.classList.add('visible');
-
-            // Store user data temporarily in localStorage
+            // Store user data temporarily
             try {
                 localStorage.setItem('fresh_video_user_temp', JSON.stringify({
                     name: fullName.value.trim(),
@@ -2692,65 +2422,20 @@
                 }));
             } catch (_) { /* ignore */ }
 
-            // ════════════════════════════════════════════════════════
-            //  ✅ UPDATED: Use the user's Razorpay link directly.
-            //  The link already contains the encrypted amount.
-            //  No extra parameters are added to avoid breaking the link.
-            // ════════════════════════════════════════════════════════
-            const paymentUrl = CONFIG.RAZORPAY_LINK;
+            // Disable button and show pending state
+            payBtn.disabled = true;
+            payBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Redirecting to Razorpay...';
+            paymentPending.classList.add('visible');
 
-            // Open the payment link in the same tab
-            window.location.href = paymentUrl;
+            // Open payment link
+            window.location.href = CONFIG.RAZORPAY_LINK;
 
-            // Fallback: If the user somehow doesn't get redirected,
-            // we show a message and re-enable the button after 15 seconds.
+            // Fallback: re-enable after 15s if user returns
             setTimeout(function() {
-                if (!document.querySelector('.thankyou-section.visible')) {
-                    payBtn.disabled = false;
-                    payBtn.innerHTML = '<i class="fas fa-credit-card"></i> ₹599 payment karein';
-                    paymentPending.classList.remove('visible');
-                    paymentPending.innerHTML = `
-                        <i class="fas fa-exclamation-triangle" style="color:#F59E0B;font-size:2rem;"></i>
-                        <h4>Payment not completed?</h4>
-                        <p>Kripya Razorpay par payment complete karein. Agar aapne payment kar di hai toh <a href="#" id="verifyPaymentLink" style="color:var(--primary);font-weight:600;">Verify Payment</a> par click karein.</p>
-                    `;
-                    paymentPending.classList.add('visible');
-
-                    // Add verify link
-                    const verifyLink = document.getElementById('verifyPaymentLink');
-                    if (verifyLink) {
-                        verifyLink.addEventListener('click', function(e) {
-                            e.preventDefault();
-                            const paymentId = prompt('Apna Razorpay Payment ID darj karein:');
-                            if (paymentId && paymentId.trim().length > 0) {
-                                const temp = localStorage.getItem('fresh_video_user_temp');
-                                if (temp) {
-                                    try {
-                                        const user = JSON.parse(temp);
-                                        user.paid = true;
-                                        user.paymentId = paymentId.trim();
-                                        localStorage.setItem('fresh_video_paid_user', JSON.stringify(
-                                        user));
-                                        showThankYouWithData(user);
-                                    } catch (_) { /* ignore */ }
-                                }
-                            }
-                        });
-                    }
-                }
+                payBtn.disabled = false;
+                payBtn.innerHTML = '<i class="fas fa-credit-card"></i> ₹599 payment karein';
+                paymentPending.classList.remove('visible');
             }, 15000);
-        });
-
-        // ============================================================
-        //  DOWNLOAD BUTTON → Opens Google Drive Folder
-        // ============================================================
-        downloadBtn.addEventListener('click', function() {
-            window.open(CONFIG.DRIVE_FOLDER_LINK, '_blank');
-            const originalText = downloadBtn.innerHTML;
-            downloadBtn.innerHTML = '<i class="fas fa-check"></i> Opening Drive...';
-            setTimeout(function() {
-                downloadBtn.innerHTML = originalText;
-            }, 2500);
         });
 
         // ============================================================
@@ -2794,11 +2479,6 @@
         });
 
         // ============================================================
-        //  INIT — Check for payment success on page load
-        // ============================================================
-        checkPaymentSuccess();
-
-        // ============================================================
         //  EXPOSE CONFIG for debugging
         // ============================================================
         window.__FRESH_VIDEO_CONFIG = CONFIG;
@@ -2806,21 +2486,6 @@
         console.log('📌 Payment flow:');
         console.log('   - Razorpay link: ' + CONFIG.RAZORPAY_LINK);
         console.log('   - Google Drive folder: ' + CONFIG.DRIVE_FOLDER_LINK);
-        console.log('   - WhatsApp: ' + CONFIG.WHATSAPP_NUMBER);
-        console.log('   ⚠️  IMPORTANT: Configure return URL in Razorpay dashboard to: ' + window.location.href.split('?')[0] +
-            '?payment_success=1&payment_id={payment_id}&name={name}&email={email}&mobile={mobile}');
-
-        // Also check if the user has already paid (stored in localStorage)
-        try {
-            const paidUser = localStorage.getItem('fresh_video_paid_user');
-            if (paidUser) {
-                const user = JSON.parse(paidUser);
-                if (user && user.paid === true) {
-                    // Already paid — show thank you
-                    showThankYouWithData(user);
-                }
-            }
-        } catch (_) { /* ignore */ }
 
     })();
 </script>
