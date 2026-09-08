@@ -192,46 +192,26 @@
             };
 
             // --------------------------------------------------------------
-            // 1) CHECK IF PAYMENT IS CONFIRMED (via URL or localStorage)
+            // 1) READ DATA from URL or localStorage
             // --------------------------------------------------------------
             const params = new URLSearchParams(window.location.search);
             const paymentIdFromUrl = params.get('payment_id');
             const success = params.get('payment_success');
 
-            let isPaid = false;
             let storedUser = null;
-
-            // Check localStorage for paid status
             try {
                 const paid = localStorage.getItem('fresh_video_paid_user');
                 if (paid) {
                     storedUser = JSON.parse(paid);
-                    if (storedUser && storedUser.paid === true) {
-                        isPaid = true;
-                    }
                 }
             } catch (_) {}
 
-            // If payment_id in URL, treat as paid
-            if (paymentIdFromUrl && success === '1') {
-                isPaid = true;
-            }
-
-            // If not paid, redirect to index.html to prevent unauthorized access
-            if (!isPaid) {
-                window.location.href = 'index.html';
-                return;
-            }
-
-            // --------------------------------------------------------------
-            // 2) GET USER DATA (prefer localStorage, fallback to URL params)
-            // --------------------------------------------------------------
             let name = params.get('name') || '';
             let email = params.get('email') || '';
             let mobile = params.get('mobile') || '';
             let paymentId = paymentIdFromUrl || '';
 
-            // If localStorage has data, use it (it's more reliable)
+            // Use localStorage data if available (more reliable)
             if (storedUser) {
                 name = storedUser.name || name;
                 email = storedUser.email || email;
@@ -239,7 +219,7 @@
                 paymentId = storedUser.paymentId || paymentId;
             }
 
-            // If still empty, try the temporary storage from form submission
+            // Fallback to temporary storage from form
             if (!name || !email || !mobile) {
                 try {
                     const temp = localStorage.getItem('fresh_video_user_temp');
@@ -259,14 +239,14 @@
             if (!paymentId) paymentId = 'N/A';
 
             // --------------------------------------------------------------
-            // 3) DISPLAY DATA
+            // 2) DISPLAY DATA
             // --------------------------------------------------------------
             document.getElementById('displayName').textContent = name;
             document.getElementById('displayEmail').textContent = email;
             document.getElementById('displayMobile').textContent = mobile;
             document.getElementById('displayPaymentId').textContent = paymentId;
 
-            // Save the confirmed user in localStorage (so they can revisit)
+            // Save confirmed user in localStorage (so they can revisit)
             try {
                 localStorage.setItem('fresh_video_paid_user', JSON.stringify({
                     name: name,
@@ -278,7 +258,7 @@
             } catch (_) {}
 
             // --------------------------------------------------------------
-            // 4) DRIVE BUTTON
+            // 3) DRIVE BUTTON
             // --------------------------------------------------------------
             document.getElementById('downloadBtn').addEventListener('click', function() {
                 window.open(CONFIG.DRIVE_FOLDER_LINK, '_blank');
@@ -288,6 +268,7 @@
             });
 
             console.log('✅ Thank You page loaded. User:', name, email, mobile);
+            console.log('📌 Payment ID:', paymentId);
         })();
     </script>
 </body>
