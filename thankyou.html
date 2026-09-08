@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <title>Thank You – Fresh Video Subscription</title>
+
+    <!-- Google Font: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+
+    <!-- Font Awesome 6 (Free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+    <style>
+        /* ===== Base ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(170deg, #F5F0FF, #FAF7FF);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 640px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .thankyou-card {
+            background: #FFFFFF;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(109, 40, 217, 0.20);
+            padding: 48px 40px;
+            text-align: center;
+            border: 1px solid rgba(109, 40, 217, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        .thankyou-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #16A34A, #6D28D9, #EC4899);
+        }
+
+        .thankyou-icon {
+            font-size: 4rem;
+            color: #16A34A;
+            margin-bottom: 16px;
+        }
+        .thankyou-card h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #18181B;
+        }
+        .thankyou-sub {
+            color: #6B7280;
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+        }
+        .thankyou-desc {
+            color: #9CA3AF;
+            font-size: 0.95rem;
+            margin-bottom: 28px;
+        }
+
+        .user-details {
+            background: #F9FAFB;
+            padding: 16px 20px;
+            border-radius: 10px;
+            margin-bottom: 24px;
+            text-align: left;
+            border: 1px solid #F3F4F6;
+        }
+        .user-details p {
+            font-size: 0.9rem;
+            color: #4B5563;
+            padding: 4px 0;
+        }
+        .user-details p strong {
+            color: #18181B;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 44px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #6D28D9, #EC4899);
+            color: #FFFFFF;
+            box-shadow: 0 8px 30px rgba(109, 40, 217, 0.35);
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            min-height: 60px;
+            text-decoration: none;
+            width: 100%;
+            justify-content: center;
+        }
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 40px rgba(109, 40, 217, 0.45);
+        }
+        .download-btn:active {
+            transform: scale(0.96);
+        }
+        .download-btn i {
+            font-size: 1.5rem;
+        }
+
+        .thankyou-note {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #9CA3AF;
+        }
+        .thankyou-note i {
+            margin-right: 4px;
+        }
+
+        .back-home {
+            display: inline-block;
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: #6D28D9;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .back-home:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 480px) {
+            .thankyou-card {
+                padding: 32px 20px;
+            }
+            .thankyou-card h2 {
+                font-size: 1.5rem;
+            }
+            .download-btn {
+                padding: 14px 28px;
+                font-size: 1rem;
+                min-height: 52px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="thankyou-card">
+            <div class="thankyou-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2>🎉 Dhanyavaad! Subscription successful!</h2>
+            <p class="thankyou-sub">Aapka Fresh Video Subscription confirm ho gaya hai.</p>
+            <p class="thankyou-desc">Aapki details neeche di gayi hain. Ab neeche diye gaye button par click karke apni files access karein.</p>
+
+            <div class="user-details" id="userDetailsDisplay">
+                <p><strong>Naam:</strong> <span id="displayName">-</span></p>
+                <p><strong>Email:</strong> <span id="displayEmail">-</span></p>
+                <p><strong>Mobile:</strong> <span id="displayMobile">-</span></p>
+                <p><strong>Payment ID:</strong> <span id="displayPaymentId">-</span></p>
+                <p><strong>Plan:</strong> Fresh Video Subscription – ₹599 / 30 Days</p>
+            </div>
+
+            <!-- Google Drive Access Button -->
+            <button class="download-btn" id="downloadBtn">
+                <i class="fas fa-folder-open"></i> Access Videos (Google Drive)
+            </button>
+
+            <p class="thankyou-note">
+                <i class="fas fa-info-circle"></i>
+                Click karke Drive folder mein jayein jahan daily nayi videos upload ki jaati hain.
+            </p>
+            <p class="thankyou-note" style="margin-top:8px;">
+                <i class="fas fa-envelope"></i>
+                Access link aapke email par bhi bhej diya gaya hai.
+            </p>
+
+            <a href="index.html" class="back-home">
+                <i class="fas fa-arrow-left"></i> Home page par wapas jaayein
+            </a>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            'use strict';
+
+            // ==========================================================
+            //  CONFIGURATION
+            // ==========================================================
+            const CONFIG = {
+                // ✅ YOUR GOOGLE DRIVE FOLDER LINK (जहाँ videos हैं)
+                DRIVE_FOLDER_LINK: 'https://drive.google.com/drive/folders/1srsIEjINqY7vIk1CRiWeoV7yLd6Jk728',
+            };
+
+            // ==========================================================
+            //  READ URL PARAMETERS
+            // ==========================================================
+            const params = new URLSearchParams(window.location.search);
+
+            const name = params.get('name') || '';
+            const email = params.get('email') || '';
+            const mobile = params.get('mobile') || '';
+            const paymentId = params.get('payment_id') || '';
+
+            // अगर URL से नहीं मिल रहा तो localStorage से try करें
+            let finalName = name;
+            let finalEmail = email;
+            let finalMobile = mobile;
+
+            if (!finalName || !finalEmail || !finalMobile) {
+                try {
+                    const stored = localStorage.getItem('fresh_video_user_temp');
+                    if (stored) {
+                        const user = JSON.parse(stored);
+                        if (!finalName) finalName = user.name || '';
+                        if (!finalEmail) finalEmail = user.email || '';
+                        if (!finalMobile) finalMobile = user.mobile || '';
+                    }
+                } catch (_) { /* ignore */ }
+            }
+
+            // अगर फिर भी नहीं है तो "Guest" दिखाएँ
+            if (!finalName) finalName = 'Guest';
+            if (!finalEmail) finalEmail = 'Not provided';
+            if (!finalMobile) finalMobile = 'Not provided';
+
+            // ==========================================================
+            //  DISPLAY USER DATA
+            // ==========================================================
+            document.getElementById('displayName').textContent = finalName;
+            document.getElementById('displayEmail').textContent = finalEmail;
+            document.getElementById('displayMobile').textContent = finalMobile;
+            document.getElementById('displayPaymentId').textContent = paymentId || 'N/A';
+
+            // ==========================================================
+            //  SAVE TO LOCALSTORAGE (so they can revisit and still see access)
+            // ==========================================================
+            if (paymentId) {
+                try {
+                    const paidUser = {
+                        name: finalName,
+                        email: finalEmail,
+                        mobile: finalMobile,
+                        paymentId: paymentId,
+                        paid: true
+                    };
+                    localStorage.setItem('fresh_video_paid_user', JSON.stringify(paidUser));
+                } catch (_) { /* ignore */ }
+            }
+
+            // ==========================================================
+            //  DOWNLOAD / DRIVE BUTTON
+            // ==========================================================
+            const downloadBtn = document.getElementById('downloadBtn');
+            downloadBtn.addEventListener('click', function() {
+                window.open(CONFIG.DRIVE_FOLDER_LINK, '_blank');
+                const originalText = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-check"></i> Opening Drive...';
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                }, 2500);
+            });
+
+            // ==========================================================
+            //  CONSOLE LOG
+            // ==========================================================
+            console.log('✅ Thank You page loaded successfully.');
+            console.log('📌 User:', finalName, finalEmail, finalMobile);
+            console.log('📌 Drive Folder:', CONFIG.DRIVE_FOLDER_LINK);
+
+        })();
+    </script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <title>Thank You – Fresh Video Subscription</title>
+
+    <!-- Google Font: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+
+    <!-- Font Awesome 6 (Free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+    <style>
+        /* ===== Base ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(170deg, #F5F0FF, #FAF7FF);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 640px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .thankyou-card {
+            background: #FFFFFF;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(109, 40, 217, 0.20);
+            padding: 48px 40px;
+            text-align: center;
+            border: 1px solid rgba(109, 40, 217, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        .thankyou-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #16A34A, #6D28D9, #EC4899);
+        }
+
+        .thankyou-icon {
+            font-size: 4rem;
+            color: #16A34A;
+            margin-bottom: 16px;
+        }
+        .thankyou-card h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #18181B;
+        }
+        .thankyou-sub {
+            color: #6B7280;
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+        }
+        .thankyou-desc {
+            color: #9CA3AF;
+            font-size: 0.95rem;
+            margin-bottom: 28px;
+        }
+
+        .user-details {
+            background: #F9FAFB;
+            padding: 16px 20px;
+            border-radius: 10px;
+            margin-bottom: 24px;
+            text-align: left;
+            border: 1px solid #F3F4F6;
+        }
+        .user-details p {
+            font-size: 0.9rem;
+            color: #4B5563;
+            padding: 4px 0;
+        }
+        .user-details p strong {
+            color: #18181B;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 44px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #6D28D9, #EC4899);
+            color: #FFFFFF;
+            box-shadow: 0 8px 30px rgba(109, 40, 217, 0.35);
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            min-height: 60px;
+            text-decoration: none;
+            width: 100%;
+            justify-content: center;
+        }
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 40px rgba(109, 40, 217, 0.45);
+        }
+        .download-btn:active {
+            transform: scale(0.96);
+        }
+        .download-btn i {
+            font-size: 1.5rem;
+        }
+
+        .thankyou-note {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #9CA3AF;
+        }
+        .thankyou-note i {
+            margin-right: 4px;
+        }
+
+        .back-home {
+            display: inline-block;
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: #6D28D9;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .back-home:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 480px) {
+            .thankyou-card {
+                padding: 32px 20px;
+            }
+            .thankyou-card h2 {
+                font-size: 1.5rem;
+            }
+            .download-btn {
+                padding: 14px 28px;
+                font-size: 1rem;
+                min-height: 52px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="thankyou-card">
+            <div class="thankyou-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2>🎉 Dhanyavaad! Subscription successful!</h2>
+            <p class="thankyou-sub">Aapka Fresh Video Subscription confirm ho gaya hai.</p>
+            <p class="thankyou-desc">Aapki details neeche di gayi hain. Ab neeche diye gaye button par click karke apni files access karein.</p>
+
+            <div class="user-details" id="userDetailsDisplay">
+                <p><strong>Naam:</strong> <span id="displayName">-</span></p>
+                <p><strong>Email:</strong> <span id="displayEmail">-</span></p>
+                <p><strong>Mobile:</strong> <span id="displayMobile">-</span></p>
+                <p><strong>Payment ID:</strong> <span id="displayPaymentId">-</span></p>
+                <p><strong>Plan:</strong> Fresh Video Subscription – ₹599 / 30 Days</p>
+            </div>
+
+            <!-- Google Drive Access Button -->
+            <button class="download-btn" id="downloadBtn">
+                <i class="fas fa-folder-open"></i> Access Videos (Google Drive)
+            </button>
+
+            <p class="thankyou-note">
+                <i class="fas fa-info-circle"></i>
+                Click karke Drive folder mein jayein jahan daily nayi videos upload ki jaati hain.
+            </p>
+            <p class="thankyou-note" style="margin-top:8px;">
+                <i class="fas fa-envelope"></i>
+                Access link aapke email par bhi bhej diya gaya hai.
+            </p>
+
+            <a href="index.html" class="back-home">
+                <i class="fas fa-arrow-left"></i> Home page par wapas jaayein
+            </a>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            'use strict';
+
+            // ==========================================================
+            //  CONFIGURATION
+            // ==========================================================
+            const CONFIG = {
+                // ✅ YOUR GOOGLE DRIVE FOLDER LINK (जहाँ videos हैं)
+                DRIVE_FOLDER_LINK: 'https://drive.google.com/drive/folders/1srsIEjINqY7vIk1CRiWeoV7yLd6Jk728',
+            };
+
+            // ==========================================================
+            //  READ URL PARAMETERS
+            // ==========================================================
+            const params = new URLSearchParams(window.location.search);
+
+            const name = params.get('name') || '';
+            const email = params.get('email') || '';
+            const mobile = params.get('mobile') || '';
+            const paymentId = params.get('payment_id') || '';
+
+            // अगर URL से नहीं मिल रहा तो localStorage से try करें
+            let finalName = name;
+            let finalEmail = email;
+            let finalMobile = mobile;
+
+            if (!finalName || !finalEmail || !finalMobile) {
+                try {
+                    const stored = localStorage.getItem('fresh_video_user_temp');
+                    if (stored) {
+                        const user = JSON.parse(stored);
+                        if (!finalName) finalName = user.name || '';
+                        if (!finalEmail) finalEmail = user.email || '';
+                        if (!finalMobile) finalMobile = user.mobile || '';
+                    }
+                } catch (_) { /* ignore */ }
+            }
+
+            // अगर फिर भी नहीं है तो "Guest" दिखाएँ
+            if (!finalName) finalName = 'Guest';
+            if (!finalEmail) finalEmail = 'Not provided';
+            if (!finalMobile) finalMobile = 'Not provided';
+
+            // ==========================================================
+            //  DISPLAY USER DATA
+            // ==========================================================
+            document.getElementById('displayName').textContent = finalName;
+            document.getElementById('displayEmail').textContent = finalEmail;
+            document.getElementById('displayMobile').textContent = finalMobile;
+            document.getElementById('displayPaymentId').textContent = paymentId || 'N/A';
+
+            // ==========================================================
+            //  SAVE TO LOCALSTORAGE (so they can revisit and still see access)
+            // ==========================================================
+            if (paymentId) {
+                try {
+                    const paidUser = {
+                        name: finalName,
+                        email: finalEmail,
+                        mobile: finalMobile,
+                        paymentId: paymentId,
+                        paid: true
+                    };
+                    localStorage.setItem('fresh_video_paid_user', JSON.stringify(paidUser));
+                } catch (_) { /* ignore */ }
+            }
+
+            // ==========================================================
+            //  DOWNLOAD / DRIVE BUTTON
+            // ==========================================================
+            const downloadBtn = document.getElementById('downloadBtn');
+            downloadBtn.addEventListener('click', function() {
+                window.open(CONFIG.DRIVE_FOLDER_LINK, '_blank');
+                const originalText = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-check"></i> Opening Drive...';
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                }, 2500);
+            });
+
+            // ==========================================================
+            //  CONSOLE LOG
+            // ==========================================================
+            console.log('✅ Thank You page loaded successfully.');
+            console.log('📌 User:', finalName, finalEmail, finalMobile);
+            console.log('📌 Drive Folder:', CONFIG.DRIVE_FOLDER_LINK);
+
+        })();
+    </script>
+
+</body>
+</html>
