@@ -13,9 +13,6 @@
     <!-- Font Awesome 6 (Free) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
-    <!-- Razorpay Checkout -->
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
     <style>
         /* ===== CSS Variables ===== */
         :root {
@@ -2197,16 +2194,15 @@
 
         // ============================================================
         //  CONFIGURATION
-        //  ✅ Razorpay Checkout — uses order ID from dashboard
-        //  After successful payment → redirect to THANKYOU page
+        //  ✅ Simple Razorpay Payment Link (no API keys / order IDs needed)
+        //  After payment → redirect to THANKYOU page
         // ============================================================
         const CONFIG = {
-            // 🔑 Razorpay Key ID (from Razorpay Dashboard → Settings → API Keys)
-            RAZORPAY_KEY: 'rzp_live_xxxxxxxxxxxxxxxxxxxx',
-
-            // 📦 Order ID (create a one-time order on Razorpay Dashboard → Orders)
-            // Amount: ₹599 (59900 paise) | Currency: INR
-            ORDER_ID: 'order_xxxxxxxxxxxxxxxxxxxx',
+            // 🔗 Razorpay Payment Link (user pays ₹599)
+            // Create this link in Razorpay Dashboard → Payment Links
+            // Set amount = ₹599, and configure success URL to:
+            // https://param-bhakti-live.faizkhan765644.workers.dev/thankyou
+            RAZORPAY_LINK: 'https://rzp.io/rzp/freshvideo599',
 
             // 🔗 Thank You page URL (auto-redirect after success)
             THANKYOU_URL: 'https://param-bhakti-live.faizkhan765644.workers.dev/thankyou',
@@ -2413,9 +2409,9 @@
         });
 
         // ============================================================
-        //  FORM SUBMISSION → Razorpay Checkout
-        //  ✅ Opens Razorpay checkout with pre-created order
-        //  ✅ On success → redirect to THANKYOU_URL
+        //  FORM SUBMISSION → Redirect to Razorpay Payment Link
+        //  ✅ No API keys needed — simple payment link approach
+        //  ✅ After successful payment, Razorpay redirects to THANKYOU_URL
         // ============================================================
         form.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -2437,79 +2433,20 @@
 
             // Disable button and show pending state
             payBtn.disabled = true;
-            payBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Razorpay open ho raha hai...';
+            payBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Razorpay redirecting...';
             paymentPending.classList.add('visible');
 
-            // Build Razorpay options
-            var options = {
-                key: CONFIG.RAZORPAY_KEY,
-                order_id: CONFIG.ORDER_ID,
-                amount: 59900, // ₹599 in paise
-                currency: 'INR',
-                name: 'Fresh Video – Param Bhakti Live',
-                description: '30 Days Subscription • 4 Videos Daily • 1 User',
-                image: '', // optional: add your logo URL
-                prefill: {
-                    name: fullName.value.trim(),
-                    email: email.value.trim(),
-                    contact: mobile.value.trim()
-                },
-                notes: {
-                    plan: 'Fresh Video Subscription',
-                    duration: '30 Days',
-                    user: fullName.value.trim()
-                },
-                theme: {
-                    color: '#6D28D9'
-                },
-                modal: {
-                    ondismiss: function() {
-                        // User closed the modal — re-enable button
-                        payBtn.disabled = false;
-                        payBtn.innerHTML = '<i class="fas fa-credit-card"></i> ₹599 payment karein';
-                        paymentPending.classList.remove('visible');
-                    }
-                }
-            };
+            // 🔁 REDIRECT TO RAZORPAY PAYMENT LINK
+            // The payment link should be configured with success URL =
+            // https://param-bhakti-live.faizkhan765644.workers.dev/thankyou
+            window.location.href = CONFIG.RAZORPAY_LINK;
 
-            // Callback: success → redirect to thankyou page
-            options.handler = function(response) {
-                console.log('✅ Payment successful:', response);
-
-                // Store payment info
-                try {
-                    localStorage.setItem('fresh_video_payment', JSON.stringify({
-                        order_id: response.razorpay_order_id,
-                        payment_id: response.razorpay_payment_id,
-                        signature: response.razorpay_signature,
-                        timestamp: Date.now()
-                    }));
-                } catch (_) { /* ignore */ }
-
-                // 🔁 REDIRECT TO THANKYOU PAGE
-                window.location.href = CONFIG.THANKYOU_URL;
-            };
-
-            // Callback: failure → show error and re-enable
-            options.callback = function(response) {
-                console.warn('⚠️ Payment failed or cancelled:', response);
+            // Fallback: re-enable after 20s if user returns
+            setTimeout(function() {
                 payBtn.disabled = false;
                 payBtn.innerHTML = '<i class="fas fa-credit-card"></i> ₹599 payment karein';
                 paymentPending.classList.remove('visible');
-                alert('Payment failed ya cancel kar di gayi. Kripya punah prayas karein.');
-            };
-
-            // Open Razorpay checkout
-            try {
-                var rzp = new Razorpay(options);
-                rzp.open();
-            } catch (err) {
-                console.error('❌ Razorpay init error:', err);
-                payBtn.disabled = false;
-                payBtn.innerHTML = '<i class="fas fa-credit-card"></i> ₹599 payment karein';
-                paymentPending.classList.remove('visible');
-                alert('Razorpay open nahi ho paaya. Kripya check karein ki aapka internet connection sahi hai.');
-            }
+            }, 20000);
         });
 
         // ============================================================
@@ -2558,35 +2495,39 @@
         window.__FRESH_VIDEO_CONFIG = CONFIG;
         console.log('✅ Fresh Video – Param Bhakti Live loaded successfully.');
         console.log('📌 Payment flow:');
-        console.log('   - Razorpay Key: ' + CONFIG.RAZORPAY_KEY);
-        console.log('   - Order ID: ' + CONFIG.ORDER_ID);
+        console.log('   - Razorpay Payment Link: ' + CONFIG.RAZORPAY_LINK);
         console.log('   - Thank You URL: ' + CONFIG.THANKYOU_URL);
+        console.log('💡 Note: Configure success URL in Razorpay Dashboard for this payment link.');
 
         // ============================================================
-        //  🔔 CHECK FOR PAYMENT REDIRECT (detect if coming from Razorpay)
+        //  🔔 CHECK IF USER RETURNED FROM PAYMENT
+        //  Detect if we came back from Razorpay via query params
         // ============================================================
-        (function checkPaymentRedirect() {
+        (function checkPaymentReturn() {
             var urlParams = new URLSearchParams(window.location.search);
             var razorpayPaymentId = urlParams.get('razorpay_payment_id');
             var razorpayOrderId = urlParams.get('razorpay_order_id');
             var razorpaySignature = urlParams.get('razorpay_signature');
 
-            if (razorpayPaymentId && razorpayOrderId && razorpaySignature) {
-                console.log('🔄 Payment redirect detected!');
-                console.log('   Payment ID:', razorpayPaymentId);
-                console.log('   Order ID:', razorpayOrderId);
+            // Also check for common Razorpay payment link return params
+            var paymentId = urlParams.get('payment_id');
+            var orderId = urlParams.get('order_id');
+
+            if (razorpayPaymentId || paymentId) {
+                console.log('🔄 Payment return detected!');
+                console.log('   Payment ID:', razorpayPaymentId || paymentId);
 
                 // Store payment info
                 try {
                     localStorage.setItem('fresh_video_payment', JSON.stringify({
-                        order_id: razorpayOrderId,
-                        payment_id: razorpayPaymentId,
-                        signature: razorpaySignature,
+                        payment_id: razorpayPaymentId || paymentId,
+                        order_id: razorpayOrderId || orderId,
+                        signature: razorpaySignature || '',
                         timestamp: Date.now()
                     }));
                 } catch (_) { /* ignore */ }
 
-                // Redirect to thank you page if not already there
+                // If we're still on this page and not already on thankyou, redirect
                 if (!window.location.href.includes('thankyou')) {
                     window.location.href = CONFIG.THANKYOU_URL;
                 }
