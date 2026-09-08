@@ -2194,17 +2194,16 @@
 
         // ============================================================
         //  CONFIGURATION
-        //  ✅ Simple Razorpay Payment Link (no API keys / order IDs needed)
-        //  After payment → redirect to THANKYOU page
+        //  ✅ Razorpay Payment Link (no API keys needed)
+        //  🔗 User clicks → goes to Razorpay → pays → auto-redirects to THANKYOU
+        //  ⚠️ IMPORTANT: In Razorpay Dashboard, set the success URL for this
+        //     payment link to: https://param-bhakti-live.faizkhan765644.workers.dev/thankyou
         // ============================================================
         const CONFIG = {
             // 🔗 Razorpay Payment Link (user pays ₹599)
-            // Create this link in Razorpay Dashboard → Payment Links
-            // Set amount = ₹599, and configure success URL to:
-            // https://param-bhakti-live.faizkhan765644.workers.dev/thankyou
-            RAZORPAY_LINK: 'https://rzp.io/rzp/freshvideo599',
+            RAZORPAY_LINK: 'https://razorpay.me/@freshnewvideo',
 
-            // 🔗 Thank You page URL (auto-redirect after success)
+            // 🔗 Thank You page URL (auto-redirect after successful payment)
             THANKYOU_URL: 'https://param-bhakti-live.faizkhan765644.workers.dev/thankyou',
 
             // 📁 Google Drive folder link (for access after payment)
@@ -2410,8 +2409,9 @@
 
         // ============================================================
         //  FORM SUBMISSION → Redirect to Razorpay Payment Link
-        //  ✅ No API keys needed — simple payment link approach
-        //  ✅ After successful payment, Razorpay redirects to THANKYOU_URL
+        //  ✅ User fills details → clicks pay → goes to Razorpay
+        //  ✅ After successful payment, Razorpay auto-redirects to THANKYOU_URL
+        //  ⚠️ Success URL must be configured in Razorpay Dashboard
         // ============================================================
         form.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -2437,8 +2437,8 @@
             paymentPending.classList.add('visible');
 
             // 🔁 REDIRECT TO RAZORPAY PAYMENT LINK
-            // The payment link should be configured with success URL =
-            // https://param-bhakti-live.faizkhan765644.workers.dev/thankyou
+            // The payment link should have its success URL configured in Razorpay Dashboard
+            // to: https://param-bhakti-live.faizkhan765644.workers.dev/thankyou
             window.location.href = CONFIG.RAZORPAY_LINK;
 
             // Fallback: re-enable after 20s if user returns
@@ -2497,7 +2497,8 @@
         console.log('📌 Payment flow:');
         console.log('   - Razorpay Payment Link: ' + CONFIG.RAZORPAY_LINK);
         console.log('   - Thank You URL: ' + CONFIG.THANKYOU_URL);
-        console.log('💡 Note: Configure success URL in Razorpay Dashboard for this payment link.');
+        console.log('💡 IMPORTANT: Configure success URL in Razorpay Dashboard for this payment link.');
+        console.log('   Success URL must be set to: ' + CONFIG.THANKYOU_URL);
 
         // ============================================================
         //  🔔 CHECK IF USER RETURNED FROM PAYMENT
@@ -2509,7 +2510,6 @@
             var razorpayOrderId = urlParams.get('razorpay_order_id');
             var razorpaySignature = urlParams.get('razorpay_signature');
 
-            // Also check for common Razorpay payment link return params
             var paymentId = urlParams.get('payment_id');
             var orderId = urlParams.get('order_id');
 
@@ -2517,7 +2517,6 @@
                 console.log('🔄 Payment return detected!');
                 console.log('   Payment ID:', razorpayPaymentId || paymentId);
 
-                // Store payment info
                 try {
                     localStorage.setItem('fresh_video_payment', JSON.stringify({
                         payment_id: razorpayPaymentId || paymentId,
