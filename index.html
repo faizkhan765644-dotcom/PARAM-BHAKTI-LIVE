@@ -2153,7 +2153,7 @@
 
                     <div class="payment-note">
                         <i class="fas fa-lock"></i>
-                        Aap ₹599 ka Fresh Video Subscription khareed rahe hain. Payment request from <strong>SHIVNARAYAN KUMAR</strong> ke Razorpay account par jaayegi.
+                        Aap ₹599 ka Fresh Video Subscription khareed rahe hain.
                     </div>
 
                     <button type="submit" class="btn btn-primary btn-block" id="payBtn">
@@ -2365,13 +2365,12 @@
 
         // ============================================================
         //  CONFIGURATION
-        //  ✅ UPDATED: Razorpay payment link (without amount param)
-        //  The user manually enters ₹599 on the Razorpay page.
-        //  Payment request is from SHIVNARAYAN KUMAR.
+        //  ✅ UPDATED: Razorpay payment link as requested by the user.
+        //  This link already includes the encrypted amount parameter.
         // ============================================================
         const CONFIG = {
-            // ✅ UPDATED: Plain Razorpay payment link as requested
-            RAZORPAY_LINK: 'https://razorpay.me/@freshnewvideo',
+            // ✅ UPDATED: User's specific Razorpay payment link with encrypted amount
+            RAZORPAY_LINK: 'https://razorpay.me/@freshnewvideo?amount=QmsUqSRscbBFbActEhLNwg%3D%3D',
 
             // Google Drive folder link (unchanged)
             DRIVE_FOLDER_LINK: 'https://drive.google.com/drive/folders/1srsIEjINqY7vIk1CRiWeoV7yLd6Jk728',
@@ -2591,8 +2590,10 @@
             const paymentId = params.get('payment_id');
 
             if (success === '1' && paymentId) {
+                // Payment confirmed — show Thank You
                 showThankYouFromURL();
             } else {
+                // Check if we have a stored user that already paid
                 try {
                     const stored = localStorage.getItem('fresh_video_paid_user');
                     if (stored) {
@@ -2620,12 +2621,14 @@
                 paymentId: paymentId
             };
 
+            // Store in localStorage so they don't lose access
             try {
                 localStorage.setItem('fresh_video_paid_user', JSON.stringify(userData));
             } catch (_) { /* ignore */ }
 
             showThankYouWithData(userData);
 
+            // Clean URL (remove query params) for cleaner look
             if (window.history && window.history.replaceState) {
                 const cleanUrl = window.location.pathname + window.location.hash;
                 window.history.replaceState({}, document.title, cleanUrl);
@@ -2639,10 +2642,12 @@
 
             thankyouSection.classList.add('visible');
 
+            // Scroll to thank you
             setTimeout(function() {
                 thankyouSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }, 300);
 
+            // Hide the purchase section
             const purchaseSection = document.querySelector('.purchase-section');
             if (purchaseSection) {
                 purchaseSection.style.display = 'none';
@@ -2651,8 +2656,13 @@
 
         // ============================================================
         //  FORM SUBMISSION → Open the user's Razorpay Payment Link
-        //  The user manually enters ₹599 on the Razorpay page.
-        //  After payment, they are redirected back with params.
+        //  When the user clicks the payment button, they are redirected
+        //  directly to the specific Razorpay link provided by the user.
+        //  The link already has the encrypted amount parameter.
+        //
+        //  IMPORTANT: The user MUST configure the "Return URL" in their
+        //  Razorpay dashboard to point back to this page with:
+        //  ?payment_success=1&payment_id={payment_id}&name={name}&email={email}&mobile={mobile}
         // ============================================================
         form.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -2663,14 +2673,17 @@
                 return;
             }
 
+            // Gather user data
             const userName = encodeURIComponent(fullName.value.trim());
             const userEmail = encodeURIComponent(email.value.trim());
             const userMobile = encodeURIComponent(mobile.value.trim());
 
+            // Disable button and show pending state
             payBtn.disabled = true;
             payBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Redirecting to Razorpay...';
             paymentPending.classList.add('visible');
 
+            // Store user data temporarily in localStorage
             try {
                 localStorage.setItem('fresh_video_user_temp', JSON.stringify({
                     name: fullName.value.trim(),
@@ -2680,16 +2693,17 @@
             } catch (_) { /* ignore */ }
 
             // ════════════════════════════════════════════════════════
-            //  ✅ UPDATED: Use the plain Razorpay link.
-            //  The user will manually enter ₹599 on the Razorpay page.
-            //  Payment request is from SHIVNARAYAN KUMAR.
+            //  ✅ UPDATED: Use the user's Razorpay link directly.
+            //  The link already contains the encrypted amount.
+            //  No extra parameters are added to avoid breaking the link.
             // ════════════════════════════════════════════════════════
             const paymentUrl = CONFIG.RAZORPAY_LINK;
 
+            // Open the payment link in the same tab
             window.location.href = paymentUrl;
 
             // Fallback: If the user somehow doesn't get redirected,
-            // show a message and re-enable the button after 15 seconds.
+            // we show a message and re-enable the button after 15 seconds.
             setTimeout(function() {
                 if (!document.querySelector('.thankyou-section.visible')) {
                     payBtn.disabled = false;
@@ -2699,10 +2713,10 @@
                         <i class="fas fa-exclamation-triangle" style="color:#F59E0B;font-size:2rem;"></i>
                         <h4>Payment not completed?</h4>
                         <p>Kripya Razorpay par payment complete karein. Agar aapne payment kar di hai toh <a href="#" id="verifyPaymentLink" style="color:var(--primary);font-weight:600;">Verify Payment</a> par click karein.</p>
-                        <p style="font-size:0.8rem;margin-top:8px;color:#78350F;">Payment request from <strong>SHIVNARAYAN KUMAR</strong></p>
                     `;
                     paymentPending.classList.add('visible');
 
+                    // Add verify link
                     const verifyLink = document.getElementById('verifyPaymentLink');
                     if (verifyLink) {
                         verifyLink.addEventListener('click', function(e) {
@@ -2793,16 +2807,16 @@
         console.log('   - Razorpay link: ' + CONFIG.RAZORPAY_LINK);
         console.log('   - Google Drive folder: ' + CONFIG.DRIVE_FOLDER_LINK);
         console.log('   - WhatsApp: ' + CONFIG.WHATSAPP_NUMBER);
-        console.log('   - Payment request from: SHIVNARAYAN KUMAR');
-        console.log('   ⚠️  IMPORTANT: Configure return URL in Razorpay dashboard to: ' + window.location.href.split(
-            '?')[0] +
+        console.log('   ⚠️  IMPORTANT: Configure return URL in Razorpay dashboard to: ' + window.location.href.split('?')[0] +
             '?payment_success=1&payment_id={payment_id}&name={name}&email={email}&mobile={mobile}');
 
+        // Also check if the user has already paid (stored in localStorage)
         try {
             const paidUser = localStorage.getItem('fresh_video_paid_user');
             if (paidUser) {
                 const user = JSON.parse(paidUser);
                 if (user && user.paid === true) {
+                    // Already paid — show thank you
                     showThankYouWithData(user);
                 }
             }
