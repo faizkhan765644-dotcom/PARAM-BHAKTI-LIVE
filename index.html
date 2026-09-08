@@ -2194,11 +2194,11 @@
 
         // ============================================================
         //  CONFIGURATION
-        //  ✅ Razorpay payment link with encrypted amount
+        //  ✅ Updated to the simple Razorpay link (without encrypted amount)
         // ============================================================
         const CONFIG = {
-            // Razorpay payment link
-            RAZORPAY_LINK: 'https://razorpay.me/@freshnewvideo?amount=QmsUqSRscbBFbActEhLNwg%3D%3D',
+            // Razorpay payment link – user enters amount manually
+            RAZORPAY_LINK: 'https://razorpay.me/@freshnewvideo',
 
             // Google Drive folder link
             DRIVE_FOLDER_LINK: 'https://drive.google.com/drive/folders/1srsIEjINqY7vIk1CRiWeoV7yLd6Jk728',
@@ -2427,7 +2427,7 @@
             payBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Redirecting to Razorpay...';
             paymentPending.classList.add('visible');
 
-            // Open payment link
+            // Open the simple Razorpay link
             window.location.href = CONFIG.RAZORPAY_LINK;
 
             // Fallback: re-enable after 15s if user returns
