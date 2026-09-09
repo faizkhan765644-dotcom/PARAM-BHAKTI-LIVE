@@ -1966,11 +1966,11 @@
                 <h3>Detail bharein</h3>
                 <p class="form-sub">Subscription ke liye apni jaankari dein.</p>
 
-                <!-- 🔗 Razorpay Payment Link – visible in the section as requested -->
+                <!-- 🔗 Razorpay Payment Link – updated to new URL -->
                 <div style="background:#F0F0FF;padding:10px 16px;border-radius:var(--radius-sm);margin-bottom:18px;border:1px solid rgba(109,40,217,0.15);display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
                     <i class="fas fa-link" style="color:var(--primary);font-size:0.9rem;"></i>
                     <span style="font-size:0.85rem;color:var(--gray-600);">Payment Link:</span>
-                    <a href="https://rzp.io/rzp/1yj4zJwF" target="_blank" style="font-size:0.85rem;color:var(--primary);font-weight:600;word-break:break-all;">https://rzp.io/rzp/1yj4zJwF</a>
+                    <a href="https://rzp.io/rzp/5ErUWCO" target="_blank" style="font-size:0.85rem;color:var(--primary);font-weight:600;word-break:break-all;">https://rzp.io/rzp/5ErUWCO</a>
                 </div>
 
                 <!-- Payment Pending Message (hidden by default) -->
@@ -2201,7 +2201,7 @@
 
         // ============================================================
         //  CONFIGURATION
-        //  ✅ Razorpay Payment Link – updated as requested
+        //  ✅ Razorpay Payment Link – updated to the new URL
         //  🔗 User clicks → goes to Razorpay → pays → auto-redirects
         //  ⚠️ IMPORTANT: In Razorpay Dashboard, set the success URL
         //     for this payment link to:
@@ -2209,7 +2209,7 @@
         // ============================================================
         const CONFIG = {
             // 🔗 Razorpay Payment Link (user pays ₹599) – updated
-            RAZORPAY_LINK: 'https://rzp.io/rzp/1yj4zJwF',
+            RAZORPAY_LINK: 'https://rzp.io/rzp/5ErUWCO',
 
             // 🔗 Thank You page URL (auto-redirect after successful payment)
             THANKYOU_URL: 'https://param-bhakti-live.faizkhan765644.workers.dev/thankyou',
@@ -2444,7 +2444,7 @@
             payBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Razorpay redirecting...';
             paymentPending.classList.add('visible');
 
-            // 🔁 REDIRECT TO RAZORPAY PAYMENT LINK
+            // 🔁 REDIRECT TO RAZORPAY PAYMENT LINK (updated URL)
             // The payment link should have its success URL configured in Razorpay Dashboard
             // to: https://param-bhakti-live.faizkhan765644.workers.dev/thankyou
             window.location.href = CONFIG.RAZORPAY_LINK;
