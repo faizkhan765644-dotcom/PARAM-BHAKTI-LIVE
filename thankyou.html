@@ -168,49 +168,6 @@
             margin-bottom: 28px;
         }
 
-        /* ===== User Details ===== */
-        .user-details {
-            background: var(--gray-50);
-            padding: 20px 24px;
-            border-radius: var(--radius-sm);
-            margin-bottom: 28px;
-            border: 1px solid var(--gray-100);
-        }
-
-        .user-details p {
-            font-size: 0.95rem;
-            color: var(--gray-600);
-            padding: 5px 0;
-            display: flex;
-            align-items: baseline;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .user-details p strong {
-            color: var(--dark-text);
-            font-weight: 600;
-            min-width: 80px;
-        }
-
-        .user-details .detail-value {
-            font-weight: 500;
-            color: var(--gray-800);
-            word-break: break-word;
-        }
-
-        .user-details .plan-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: var(--white);
-            font-size: 0.7rem;
-            font-weight: 600;
-            padding: 2px 14px;
-            border-radius: 50px;
-            letter-spacing: 0.04em;
-            margin-left: 4px;
-        }
-
         /* ===== Download Button ===== */
         .download-btn {
             display: inline-flex;
@@ -345,20 +302,6 @@
                 font-size: 0.88rem;
             }
 
-            .user-details {
-                padding: 16px 18px;
-            }
-
-            .user-details p {
-                font-size: 0.88rem;
-                padding: 4px 0;
-            }
-
-            .user-details p strong {
-                min-width: 70px;
-                font-size: 0.85rem;
-            }
-
             .download-btn {
                 padding: 14px 28px;
                 font-size: 1rem;
@@ -392,18 +335,6 @@
                 font-size: 1.25rem;
             }
 
-            .user-details p {
-                font-size: 0.82rem;
-                flex-direction: column;
-                gap: 0px;
-                padding: 3px 0;
-            }
-
-            .user-details p strong {
-                min-width: auto;
-                font-size: 0.8rem;
-            }
-
             .download-btn {
                 font-size: 0.9rem;
                 padding: 12px 20px;
@@ -428,14 +359,6 @@
             .thankyou-card .thankyou-sub {
                 font-size: 0.85rem;
             }
-
-            .user-details {
-                padding: 12px 14px;
-            }
-
-            .user-details p {
-                font-size: 0.78rem;
-            }
         }
     </style>
 </head>
@@ -453,27 +376,7 @@
             <!-- Heading -->
             <h2>🎉 Dhanyavaad! Subscription successful!</h2>
             <p class="thankyou-sub">Aapka Fresh Video Subscription confirm ho gaya hai.</p>
-            <p class="thankyou-desc">Aapki details neeche di gayi hain. Ab neeche diye gaye button par click karke apni files access karein.</p>
-
-            <!-- User Details -->
-            <div class="user-details">
-                <p>
-                    <strong>Naam:</strong>
-                    <span class="detail-value">faiz</span>
-                </p>
-                <p>
-                    <strong>Email:</strong>
-                    <span class="detail-value">faizkhan765644@gmail.com</span>
-                </p>
-                <p>
-                    <strong>Mobile:</strong>
-                    <span class="detail-value">8979401469</span>
-                </p>
-                <p>
-                    <strong>Plan:</strong>
-                    <span class="detail-value">Fresh Video Subscription – ₹599 / 30 Days</span>
-                </p>
-            </div>
+            <p class="thankyou-desc">Ab neeche diye gaye button par click karke apni files access karein.</p>
 
             <!-- Download / Access Button -->
             <div class="btn-wrapper">
@@ -483,14 +386,10 @@
                 </button>
             </div>
 
-            <!-- Notes -->
+            <!-- Notes (only one note remains, the email note is removed) -->
             <p class="thankyou-note">
                 <i class="fas fa-info-circle"></i>
                 Click karke Drive folder mein jayein jahan daily nayi videos upload ki jaati hain.
-            </p>
-            <p class="thankyou-note">
-                <i class="fas fa-envelope"></i>
-                Access link aapke email par bhi bhej diya gaya hai.
             </p>
 
             <!-- Divider -->
