@@ -1966,6 +1966,13 @@
                 <h3>Detail bharein</h3>
                 <p class="form-sub">Subscription ke liye apni jaankari dein.</p>
 
+                <!-- 🔗 Razorpay Payment Link – visible in the section as requested -->
+                <div style="background:#F0F0FF;padding:10px 16px;border-radius:var(--radius-sm);margin-bottom:18px;border:1px solid rgba(109,40,217,0.15);display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                    <i class="fas fa-link" style="color:var(--primary);font-size:0.9rem;"></i>
+                    <span style="font-size:0.85rem;color:var(--gray-600);">Payment Link:</span>
+                    <a href="https://rzp.io/rzp/1yj4zJwF" target="_blank" style="font-size:0.85rem;color:var(--primary);font-weight:600;word-break:break-all;">https://rzp.io/rzp/1yj4zJwF</a>
+                </div>
+
                 <!-- Payment Pending Message (hidden by default) -->
                 <div class="payment-pending" id="paymentPending">
                     <div class="spinner"></div>
@@ -2194,14 +2201,15 @@
 
         // ============================================================
         //  CONFIGURATION
-        //  ✅ Razorpay Payment Link (no API keys needed)
-        //  🔗 User clicks → goes to Razorpay → pays → auto-redirects to THANKYOU
-        //  ⚠️ IMPORTANT: In Razorpay Dashboard, set the success URL for this
-        //     payment link to: https://param-bhakti-live.faizkhan765644.workers.dev/thankyou
+        //  ✅ Razorpay Payment Link – updated as requested
+        //  🔗 User clicks → goes to Razorpay → pays → auto-redirects
+        //  ⚠️ IMPORTANT: In Razorpay Dashboard, set the success URL
+        //     for this payment link to:
+        //     https://param-bhakti-live.faizkhan765644.workers.dev/thankyou
         // ============================================================
         const CONFIG = {
-            // 🔗 Razorpay Payment Link (user pays ₹599)
-            RAZORPAY_LINK: 'https://razorpay.me/@freshnewvideo',
+            // 🔗 Razorpay Payment Link (user pays ₹599) – updated
+            RAZORPAY_LINK: 'https://rzp.io/rzp/1yj4zJwF',
 
             // 🔗 Thank You page URL (auto-redirect after successful payment)
             THANKYOU_URL: 'https://param-bhakti-live.faizkhan765644.workers.dev/thankyou',
@@ -2410,7 +2418,7 @@
         // ============================================================
         //  FORM SUBMISSION → Redirect to Razorpay Payment Link
         //  ✅ User fills details → clicks pay → goes to Razorpay
-        //  ✅ After successful payment, Razorpay auto-redirects to THANKYOU_URL
+        //  ✅ After successful payment, Razorpay auto-redirects
         //  ⚠️ Success URL must be configured in Razorpay Dashboard
         // ============================================================
         form.addEventListener('submit', function(e) {
