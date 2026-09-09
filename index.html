@@ -2217,8 +2217,8 @@
             // 📁 Google Drive folder link (for access after payment)
             DRIVE_FOLDER_LINK: 'https://drive.google.com/drive/folders/1srsIEjINqY7vIk1CRiWeoV7yLd6Jk728',
 
-            // 💬 WhatsApp support number
-            WHATSAPP_NUMBER: '919999999999'
+            // 💬 WhatsApp support number — updated to the user's number
+            WHATSAPP_NUMBER: '918226871738'
         };
 
         // ============================================================
@@ -2458,7 +2458,7 @@
         });
 
         // ============================================================
-        //  WHATSAPP SUPPORT
+        //  WHATSAPP SUPPORT — updated number
         // ============================================================
         const wspLink = document.getElementById('whatsappSupport');
         if (wspLink) {
@@ -2507,6 +2507,7 @@
         console.log('   - Thank You URL: ' + CONFIG.THANKYOU_URL);
         console.log('💡 IMPORTANT: Configure success URL in Razorpay Dashboard for this payment link.');
         console.log('   Success URL must be set to: ' + CONFIG.THANKYOU_URL);
+        console.log('📞 WhatsApp support: ' + CONFIG.WHATSAPP_NUMBER);
 
         // ============================================================
         //  🔔 CHECK IF USER RETURNED FROM PAYMENT
